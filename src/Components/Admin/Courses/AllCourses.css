@@ -1,0 +1,10 @@
+  .dropdown-items {
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .dropdown-menu:hover .dropdown-items {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  

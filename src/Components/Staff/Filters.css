@@ -1,0 +1,105 @@
+/*Filters for genders and ages */
+.filters-label{
+    font-size: 1em;
+}
+.filter-inputs{
+    width: 10%;
+    margin: 0 1%;
+    height: 10%;
+}
+.filters-list{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.filters-btn{
+    /*Styles for a good button*/
+    background-color: rgb(150, 150, 2);
+    border: none;
+    color: white;
+    padding: 7px 20px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+
+
+/*Styles for the selects*/
+  
+  /* Cambiar el color de fondo y el color del texto de las opciones seleccionadas */
+  .filter-selects option:checked {
+    background-color: #ddd;
+    color: #333;
+  }
+  
+  /* Cambiar el estilo del borde del select múltiple */
+  .filter-selects {
+    height: 230px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  /* Cambiar el estilo del botón desplegable */
+  .filter-selects::-ms-expand {
+    display: none;
+  }
+  
+  /* Establecer el estilo del texto de las opciones */
+  .filter-selects option {
+    color: #555;
+  }
+  
+  /* Cambiar el estilo del hover */
+  .filter-selects:hover {
+    border-color: #999;
+  }
+
+  /*Boton para limpiar los filtros*/
+
+  .clear-filters{
+     /*Styles for a button */
+      background-color: rgb(150, 150, 2);
+      border: none;
+      color: white;
+      padding: 7px 20px;
+      text-align: center;
+      border-radius: 4px;
+  }
+  .close-filters{
+    /*Styles for a button */
+    
+    border: none;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: underline;
+    border-radius: 4px;
+  }
+  .upper-show-filters{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*Border line at the top, to reference the below section*/
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+  .filters-header{ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+/* Styles for the part that shows the selected filters*/
+.upper-list{
+  font-size: 1em;
+}
+.upper-list ul h3{
+  margin: 0;
+  color: rgb(2, 26, 80);
+}
+.upper-list span{
+  margin-left: 10px;
+}

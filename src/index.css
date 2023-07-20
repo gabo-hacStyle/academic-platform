@@ -1,0 +1,29 @@
+body {
+  background-color: white;
+  margin: 0;
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+#root{
+  position: relative;
+  min-height: 100vh;
+  margin: 0; 
+}
+.clickable {
+  cursor: pointer;
+}
+li{
+  list-style: none;
+}
+.list-container, .above, .comps-btw-lists {
+  width: 90%;
+  padding: 0;
+  margin: 15px auto 15px;
+}
+.list-container{
+  margin-bottom: 50px
+}
+option {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  border-top: 1px solid #ccc;
+}
