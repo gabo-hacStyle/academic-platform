@@ -6,22 +6,30 @@ import { useEffect, useState } from "react";
 import { ShowFilters } from './ShowFilters.jsx'
 function Filters () {
   const dispatch = useDispatch();
+  /**
+   *   const courses = useSelector((state) => state.data.courses);
+    const programs = useSelector((state) => state.data.programs);
+
+   */
   const locations = useSelector((state) => state.filters.locations);
-  const courses = useSelector((state) => state.data.courses);
+  const courses = [4, 55, 3, ]
   const genders = useSelector((state) => state.filters.genders) ;
   const ages = useSelector((state) => state.filters.ages);
-  const programs = useSelector((state) => state.data.programs);
+  const programs = [5, 243, 4, 5, 3]
   const filters = useSelector((state) => state.filters.filters);
   //Estado para creacion de un modal
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  //Use effect to bring the getFilters
+  /**
+   * //Use effect to bring the getFilters
   useEffect(() => {
     dispatch(getData('/programs'))
     dispatch(getData('/courses'))
     dispatch(getFilters())
   }, [dispatch])
+   */
+  
   
 
 
@@ -38,9 +46,9 @@ function Filters () {
       const handleSubmit = () => {
         // Realizar la lógica de construir el query final con los valores de los filtros
         console.log(filters)
-        const query = buildQuery(filters);
+        //const query = buildQuery(filters);
         // Enviar el query al backend
-        sendQuery(query);
+        //sendQuery(query);
 
         setModal(!modal);
       };
@@ -64,13 +72,13 @@ function Filters () {
       };
     
       // Función para enviar el query al backend
-      const sendQuery = (query) => {
+      /*const sendQuery = (query) => {
         console.log(query)
         dispatch(getData(query)); 
-      };
+      };*/
 
       //funcion para limpiar los filtros
-      const clearFilters = () => {
+      /*const clearFilters = () => {
         dispatch(setFilters({
           locations: [],
           courses: [],
@@ -79,7 +87,7 @@ function Filters () {
           programs: [],
         }))
         dispatch(getData('/users'));
-      }
+      }*/
       //Funcion para cerrar los filtros
       const closeFilters = () => {
         setModal(!modal);
@@ -92,7 +100,7 @@ function Filters () {
             <header className="filters-header">
 
               <h2 onClick={toggle} className="clickable">Filtros  &gt;</h2> 
-              <button className="clear-filters clickable" onClick={clearFilters}>Limpiar filtros</button>
+              <button className="clear-filters clickable" >Limpiar filtros</button>
             </header>
             {/*Modal ? seleccionar filtros : Mostrar filtros seleccionados*/}
             {modal ? (

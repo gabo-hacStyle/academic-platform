@@ -1,6 +1,6 @@
-import { shallowEqual, useDispatch, useSelector } from "react-redux"
+import {  useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
-import { getData } from "../../../Slices/dataSlice";
+//import { getData } from "../../../Slices/dataSlice";
 import { useEffect, useState } from "react";
 import Loader from "../../Loader";
 import './AllCourses.css';
@@ -10,14 +10,21 @@ function AllCourses () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     //States stored in the Store (redux-toolkit)
-    const programs = useSelector((state) => state.data.programs, shallowEqual);
+    /*
+     const programs = useSelector((state) => state.data.programs, shallowEqual);
+     const courses = useSelector((state) => state.data.courses)
+     */
+   
     const searchValue = useSelector((state) => state.data.searchValue);
-    const courses = useSelector((state) => state.data.courses)
+    const programs = ['P', 'oaso', 'kas'];
+    const courses = ['P', 'oaso', 'kas'];
     const loading = useSelector((state) => state.ui.loading)
     
     //To filter all the programs that match with the searcher text
     const filteredPrograms = programs.filter((program) => {
-        const text = program.description.toLowerCase();
+        //const text = program.description.toLowerCase();
+        const text = program.toLowerCase();
+        
         const searchText = searchValue.toLowerCase();
         return text.includes(searchText);
     })
@@ -38,11 +45,13 @@ function AllCourses () {
         
         setOpenPrograms(programsToDropdown)
     }
-    
+    /*
     useEffect(() => {
         dispatch(getData('/programs'));
         dispatch(getData('/courses'))
     }, []);
+     */
+    
 
     return (
         <>

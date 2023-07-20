@@ -3,7 +3,8 @@ import { getCourses, getUsers, getPrograms } from "../Hooks/useAxios";
 import { setLoading } from "./uiSlice";
 
 
-const  getData  = createAsyncThunk(
+/**
+ * const  getData  = createAsyncThunk(
     'data/setData',
     async (endpoint, {dispatch}) => {
         dispatch(setLoading(true))
@@ -18,6 +19,8 @@ const  getData  = createAsyncThunk(
             dispatch(setLoading(false))
     }
 )
+ */
+
 
 
 const initialState =  {
@@ -60,4 +63,4 @@ export const {
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
-export {getData}
+//export {getData}

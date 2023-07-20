@@ -11,12 +11,15 @@ function HeaderAdmin () {
     const auth = useAuth();
     //while user is editing or creating and wants to get back to the lists through the header 
     const {pathname} = useLocation();
-    useEffect(() => {
+    /**
+     * useEffect(() => {
         if(!auth.isAuthenticated) {
             navigate('/');
             localStorage.removeItem('token');
         }
     }, [])
+     */
+    
         
 
     //Checking if the user is in the admin page

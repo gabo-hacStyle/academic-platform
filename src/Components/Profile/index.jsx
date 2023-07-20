@@ -4,15 +4,18 @@ import { Outlet,  useNavigate } from "react-router-dom/dist";
 import { useAuth } from "../../Hooks/auth";
 
 function Profile () {
-    const navigate = useNavigate();
+   // const navigate = useNavigate();
     const auth = useAuth();
     //if the page is refreshed and the user is logged in, set the token
-    useEffect(() => {
+    /**
+     * useEffect(() => {
         if (!auth.isAuthenticated) {
             navigate('/')
             localStorage.removeItem('token');
         }
     }, [])
+     */
+    
 
     const handleLogout = () => {
         auth.logout();          

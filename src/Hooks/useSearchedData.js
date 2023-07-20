@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+/**
+ * import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from "../Slices/dataSlice";
 
 
@@ -16,3 +17,5 @@ function searchedData () {
     })
    )) 
 } 
+ */
+

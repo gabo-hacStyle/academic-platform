@@ -8,18 +8,25 @@ function AllUsers () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    /*
     const users = useSelector((state) => state.data.users);
+    useEffect(() => {
+        dispatch(getData('/users'));   
+    }, []);
+    */
+    const users = ['Anna', 'asdasd', 'oasosao']
     const searchValue = useSelector((state) => state.data.searchValue)
 
     const loading = useSelector((state) => state.ui.loading);
     
-    useEffect(() => {
-        dispatch(getData('/users'));   
-    }, []);
+    
 
     
     const filteredUsers = users.filter((user) => {
-        const text = user.fullName.toLowerCase();
+        //
+        //const text = user.fullName.toLowerCase();
+        const text = user.toLowerCase();
+        
         const searchText = searchValue.toLowerCase();
         return text.includes(searchText);
     }) 

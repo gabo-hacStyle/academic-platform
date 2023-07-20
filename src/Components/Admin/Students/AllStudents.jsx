@@ -7,23 +7,30 @@ import Loader from "../../Loader";
 function AllStudents () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    /*
     const users = useSelector((state) => state.data.users, shallowEqual);
     const students = users.filter(user => user.roleId === 3);
+     */
+    const students = [0, 9, 9]
     const searchValue = useSelector((state) => state.data.searchValue);
     const loading = useSelector((state) => state.ui.loading)
 
     const filteredStudents = students.filter((student) => {
-        const text = student.fullName.toLowerCase();
+        
+        //const text = student.fullName.toLowerCase();
+        const text = student.toLowerCase();
+        
         const searchText = searchValue.toLowerCase();
         return text.includes(searchText);
     }) 
 
-
-    console.log(students)
+/**
+ * console.log(students)
     useEffect(() => {
         dispatch(getData('/users'));
     }, []);
+ */
+    
 
 
     

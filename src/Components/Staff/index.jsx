@@ -18,19 +18,23 @@ function Staff () {
     const [student, setStudent] = useState([]);
 
     //Bring the users from the store
-    const users = useSelector((state) => state.data.users);
-    const students = users.filter(user => user.roleId === 3);
+    /*const users = useSelector((state) => state.data.users);
+     */
+    const students = ['Pedro', ' Mauricio', 'Bemjamin', 'posed' ];
     const loading = useSelector((state) => state.ui.loading);
     const searchValue = useSelector((state) => state.data.searchValue)
 
    
-
-    useEffect(() => {
+    /**
+     * useEffect(() => {
         dispatch(getData('/users'));
     }, []);
+     */
+    
 
     const searchedStudents = students.filter((student) => {
-        const text = student.fullName.toLowerCase();
+        //const text = student.fullName.toLowerCase();
+        const text = student.toLowerCase();
         const searchText = searchValue.toLowerCase();
         return text.includes(searchText);
     }) 
