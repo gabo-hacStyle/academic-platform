@@ -30,7 +30,7 @@ const baseUrl = 'http://localhost:4000';
       timeout: 4000,
   })
 
- //Function to get data, the endpoint can be: 
+ //Function to get all data that is an array, the endpoint can be: 
   //-Simple uri (/courses)
   //-Filters (/users?location=USA&gender=M)
   //A combined uri ('/users/' + id + '/grades')
@@ -44,7 +44,18 @@ const baseUrl = 'http://localhost:4000';
       throw error;
     }
   };
-  
+
+  //To bring a single item, which will return an object, not array
+  export const getItemById = async (endpoint) => {
+    try {
+      const response = await instanceBackend.get(endpoint);
+      return response;
+    } catch (error) {
+      console.error('Error al obtener el item:', error);
+      throw error;
+    }
+}
+
   //Function to post data
   
   const postData = async (data, endpoint) => {

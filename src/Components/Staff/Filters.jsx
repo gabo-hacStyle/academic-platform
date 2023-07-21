@@ -22,7 +22,7 @@ function Filters () {
   const toggle = () => setModal(!modal);
 
   /**
-   * //Use effect to bring the getFilters
+  //Use effect to bring the getFilters
   useEffect(() => {
     dispatch(getData('/programs'))
     dispatch(getData('/courses'))

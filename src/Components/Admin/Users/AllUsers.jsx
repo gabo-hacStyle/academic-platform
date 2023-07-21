@@ -13,11 +13,11 @@ function AllUsers () {
     const loading = useSelector((state) => state.ui.loading);
     
     //If using axios
-    /*
-    useEffect(() => {
-        dispatch(getData('/users'));   
-    }, []);
-    */
+        /*
+            useEffect(() => {
+                dispatch(getData('/users'));   
+            }, []);
+        */
 
     //Filter all the users that match with the searcher's value
     const searchedUsers = users.filter((user) => {

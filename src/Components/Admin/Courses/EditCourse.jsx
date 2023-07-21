@@ -3,6 +3,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { editData, getItemById } from "../../../Hooks/useAxios";
 import '../Styles/editing.css'
 import Succesfull from "../../Succesfull";
+//Uncomment next line if using axios
+//import { editData, getItemById } from "../../../Hooks/useAxios";
+
+
+
+//If you need to edit something else, for each field:
+//-Add its own state
+//-Update it when receiving the item 
+//-Put it inside the editedData object
+//Copy and paste the sample jsx code of any field (like email)
+//And fix it according to the field you need
+
+
+//In this component I'm just editing three fields: Description, programId and code
+
 function EditCourse () {
   const navigate = useNavigate()
     //To get the course as an object
@@ -19,23 +34,25 @@ function EditCourse () {
     //Selecting the course id 
     const {id} = useParams();
     
-    //Getting the course
-    useEffect(() => {
-            const fetchItem = async () => {
-                const res = await getItemById('/courses/' + id);
-                setItem(res.data)
-            };
-            fetchItem();
-        
+ //if using axios
+    /**
+     * useEffect(() => {
+        const fetchItem = async () => {
+            const res = await getItemById('/courses/' + id);
+            setItem(res.data)
+        };
+        fetchItem();
     }, [id]);
+     */
 
-    
+  //Setting the fields with the values brought from the item  
     useEffect(() => {
       setDescription(item.description);
       setCode(item.code);
       setProgram(item.ProgramId);
     }, [item]);
 
+  //When a field is changed, editedData Obj will update
     useEffect(() => {
       setEditedData({
         description,
@@ -44,24 +61,30 @@ function EditCourse () {
       })
     }, [description, code, program])
 
+    //Roles are numbers, so they need to parseInt
       const onProgramChange = ({target}) => {
         const {value} = target;
         const valueInt = parseInt(value);
         setProgram(valueInt)
       }
-      const handleSubmit = (e) => {
-        e.preventDefault();
-       
-        //if in the formState there is an empty value, it will not be sent to the database
-        if (Object.values(editedData).some(value => value === '' || value === 0)) {
-          setNotFilled(true);
-          return 
-      } else {  
-          setNotFilled(false);
-          editData(editedData, '/courses/' + id)
-          setIsSent(true);
+
+      //Submitting button using axios
+      /**
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          //If in the formState there is an empty value, it will not be sent to the database
+          if (Object.values(editedData).some(value => value === '' || value === 0)) {
+            setNotFilled(true);
+            return
+          } else {
+            setNotFilled(false);
+            //Sending the new object to db
+            editData(editedData, '/courses/' + id)
+            setIsSent(true);
+          }
         }
-      } 
+      */ 
+
     return (
          <>
                 <div className="comps-btw-lists">

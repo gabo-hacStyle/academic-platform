@@ -9,7 +9,7 @@ const Succesfull = ({text}) => {
             <div>
                 <div className="modal-content success">
                     
-                        <h1>{text} con éxito!</h1>
+                        <h1>{text} succesfully!</h1>
                         <button onClick={() => navigate('/admin')}>Ok</button>
                     
                 </div>
