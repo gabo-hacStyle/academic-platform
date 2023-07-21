@@ -1,6 +1,13 @@
 import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCourses, getUsers, getPrograms } from "../Hooks/useAxios";
-import { setLoading } from "./uiSlice";
+
+//All items from the data.js file
+import { users, courses, programs } from "../Hooks/data"
+
+//Uncomment the next lines if you are using your api,
+//the reducers (add any if you need) and the exportations
+
+//import { getAnything } from "../Hooks/useAxios";
+//import { setLoading } from "./uiSlice";
 
 
 /**
@@ -22,11 +29,12 @@ import { setLoading } from "./uiSlice";
  */
 
 
-
+//If bringing data from somewhere else, intialState is an empty array
+//Eg. users: []
 const initialState =  {
-    users: [],
-    courses: [],
-    programs: [],
+    users: users,
+    courses: courses,
+    programs: programs,
     
     searchValue: '',
 }
@@ -39,27 +47,25 @@ export const dataSlice = createSlice({
         setSearchValue: (state, action) => {
             state.searchValue = action.payload;
         },
-        setUsers: (state, action) => {
-            state.users = action.payload;
-        },
-        setCourses: (state, action) => {
-            state.courses = action.payload;
-        },
-        setPrograms: (state, action) => {
-            state.programs = action.payload;
-        },
-        setUsersFiltered: (state, action) => {
-            state.usersFiltered = action.payload;
-        },
+        /**
+            setUsers: (state, action) => {
+                state.users = action.payload;
+            },
+            setCourses: (state, action) => {
+                state.courses = action.payload;
+            },
+            setPrograms: (state, action) => {
+                state.programs = action.payload;
+            },
+        */
+        
     }
 })
 
 
 export const {
     setSearchValue,
-    setUsers, setPrograms, setCourses,
-    
-    setUsersFiltered,
+    //setUsers, setPrograms, setCourses,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+//Inside this slice, we will update the state of the UI, like the current adminList, and the loading state of the app.
+
 const initialState =  {
     adminList: 'users',
     loading: false
 }
-//Inside this slice, we will have the state of the UI, like the current adminList, and the loading state of the app.
-
 export const uiSlice = createSlice({
     name: 'ui',
     initialState,
