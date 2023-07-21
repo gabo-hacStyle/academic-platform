@@ -1,72 +1,77 @@
-import { shallowEqual, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
-import { getData } from "../../../Slices/dataSlice";
-import { useEffect } from "react";
+//import { getData } from "../../../Slices/dataSlice";
+//import { useEffect } from "react";
 import Loader from "../../Loader";
 
 function AllStudents () {
-    const dispatch = useDispatch();
+    //If using axios
+    //const dispatch = useDispatch();
     const navigate = useNavigate();
-    /*
-    const users = useSelector((state) => state.data.users, shallowEqual);
-    const students = users.filter(user => user.roleId === 3);
-     */
-    const students = [0, 9, 9]
+   
+    //Bring the users from the store
+    const users = useSelector((state) => state.data.users);
+    //The students are those which roleId is 3
+    const students = users.filter((user) => user.roleId === 3);
+
     const searchValue = useSelector((state) => state.data.searchValue);
     const loading = useSelector((state) => state.ui.loading)
 
-    const filteredStudents = students.filter((student) => {
-        
-        //const text = student.fullName.toLowerCase();
-        const text = student.toLowerCase();
-        
+    //If using axios 
+        /**
+            useEffect(() => {
+                dispatch(getData('/users'));
+            }, []);
+        */
+
+    //Filter all the Students that match with the searcher's value
+    const searchedStudents = students.filter((student) => {
+        const text = student.fullName.toLowerCase();
         const searchText = searchValue.toLowerCase();
         return text.includes(searchText);
     }) 
-
-/**
- * console.log(students)
-    useEffect(() => {
-        dispatch(getData('/users'));
-    }, []);
- */
-    
-
-
-    
+        
     return ( 
         <>
             {loading && <Loader />}
+                    {
+                     //If searcher has a value, render searchedStudents array,
+                     //If the searcher is empty, render students array
+                    }
             {
-                searchValue ? filteredStudents.map((item, index )=> (
-                    <li
-                        key={index}
-                    >
+                searchValue ? searchedStudents.map((item, index )=> (
+                    <li key={index}>
                         {item.fullName} 
-                        <span><button 
-                            className="clickable"
-                            onClick={() => {
-                            navigate('/admin/students/edit/' + item.id, {
-                                state: {
-                                    id: item.id
-                                }
-                            })
-                        }}>Editar</button></span>
+                            <span>
+                                <button 
+                                className="clickable"
+                                onClick={() => {
+                                    navigate('/admin/students/edit/' + item.id, {
+                                        state: {
+                                            id: item.id
+                                        }
+                                    })
+                                }}>
+                                    Editar
+                                </button>
+                            </span>
                     </li>
                 )) : students.map((item, index )=> (
-                    <li
-                        key={index}
-                    >
+                    <li key={index}>
                         {item.fullName} 
-                        <span><button 
-                            className="clickable"
-                            onClick={() => {
-                            navigate('/admin/students/edit/' + item.id, {
-                                state: {
-                                    id: item.id
-                                }
-                            })
-                        }}>Editar</button></span>
+                            <span>
+                                <button 
+                                className="clickable"
+                                onClick={() => {
+                                    navigate('/admin/students/edit/' + item.id, {
+                                        state: {
+                                            id: item.id
+                                        }
+                                    })
+                                }}>
+                                    Editar
+                                </button>
+                            </span>
                     </li>
                 ))
             }

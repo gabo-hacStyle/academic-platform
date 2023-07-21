@@ -8,9 +8,14 @@ import { AllCourses } from "./Courses/AllCourses";
 import { AllStudents } from "./Students/AllStudents";
 import { shallowEqual, useSelector } from "react-redux";
 
+//This component is the main page the admin will see.
+//It's got a searcher,a modal to create new items 
+//and lists that would be rendered according to the state stored in ui.slice
+
 function AdminPage () {
     const [modal, setModal] = useState(false)
     const navigate = useNavigate();
+    //Bringing the list which will be rendered, configured in the ui.slice
     const list = useSelector((state) => state.ui.adminList, shallowEqual);
 
     const handleClick = () => {
@@ -45,7 +50,8 @@ function AdminPage () {
                     <AllCourses />
                 : list === 'users' ? 
                 <AllUsers />
-                : <AllStudents/>
+                : 
+                <AllStudents/>
             }
             </ul>
             </div>

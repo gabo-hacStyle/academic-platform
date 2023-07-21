@@ -4,7 +4,11 @@ import './Admin.css'
 import { useDispatch } from 'react-redux';
 import { setAdminList } from "../../Slices/uiSlice";
 import { useAuth } from '../../Hooks/auth';
-import { useEffect } from 'react';
+//import { useEffect } from 'react';
+
+//Header of the admin page. In charge of changing the state of the adminlist
+//And logout
+
 function HeaderAdmin () {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -22,7 +26,10 @@ function HeaderAdmin () {
     
         
 
-    //Checking if the user is in the admin page
+    //if the user is in the main page, the list will change
+    //if the user is in the creation or edition page, it will 
+    //navigate to the main page
+
     const handleClick = (list) => {
         if (pathname === '/admin') {
             dispatch(setAdminList(list))
@@ -40,7 +47,7 @@ function HeaderAdmin () {
         <div>
 
             <header className="header-container">
-                <h1>Pagina de administrador</h1>
+                <h1>Admin Page</h1>
                 <nav className="navbar-for-admin"> 
                     <ul>
                         <li 

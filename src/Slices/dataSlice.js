@@ -10,20 +10,25 @@ import { users, courses, programs } from "../Hooks/data"
 //import { setLoading } from "./uiSlice";
 
 
+
 /**
  * const  getData  = createAsyncThunk(
     'data/setData',
+
+    //The endpoint is sent from List Components:
+    //Staff/index.jsx || Admin/AllStudents || Admin/AllUsers || Admin/AllCourses
+
     async (endpoint, {dispatch}) => {
         dispatch(setLoading(true))
-        //If endpoint includes the word '/users' then it will fetch users
-        if (endpoint.includes('/users') ) {
-            dispatch(setUsers((await getUsers(endpoint)).data))
-        } else if (endpoint === '/courses') {
-            dispatch(setCourses((await getCourses()).data))
-        } else if (endpoint === '/programs'){
-            dispatch(setPrograms((await getPrograms()).data))
-        }
-            dispatch(setLoading(false))
+            //If endpoint includes the word '/users' then it will fetch users
+            if (endpoint.includes('/users') ) {
+                dispatch(setUsers((await getAnything(endpoint)).data))
+            } else if (endpoint.includes('/courses')) {
+                dispatch(setCourses((await getAnything(endpoint)).data))
+            } else if (endpoint.includes('/programs')){
+                dispatch(setPrograms((await getAnything(endpoint)).data))
+            }
+        dispatch(setLoading(false))
     }
 )
  */
