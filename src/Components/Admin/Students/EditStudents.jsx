@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
-//import { editData, getItemById } from "../../../Hooks/useAxios";
 import { getCountries, getStates } from "../../../Hooks/useFetchLocation";
 import Succesfull from "../../Succesfull";
 //Uncomment next line if using axios
@@ -49,7 +48,6 @@ function EditStudent () {
     useEffect(() => {
         setFullName(item.fullName);
         setLocation(item.location);
-        setPassword(item.password);
         setEmail(item.email);
       }, [item]);
     
@@ -109,6 +107,9 @@ function EditStudent () {
           }
         }
       */ 
+        const handleSubmit = () => {
+          console.log('Submit')
+          }
     
     return (
         <>

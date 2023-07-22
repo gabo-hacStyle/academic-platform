@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
-import { editData, getItemById } from "../../../Hooks/useAxios";
 import '../Styles/editing.css'
 import Succesfull from "../../Succesfull";
+import { useSelector, useDispatch } from "react-redux";
 //Uncomment next line if using axios
 //import { editData, getItemById } from "../../../Hooks/useAxios";
 
@@ -12,30 +12,43 @@ import Succesfull from "../../Succesfull";
 //-Add its own state
 //-Update it when receiving the item 
 //-Put it inside the editedData object
-//Copy and paste the sample jsx code of any field (like email)
+//Copy and paste the sample jsx code of any field (like edscription)
 //And fix it according to the field you need
 
 
 //In this component I'm just editing three fields: Description, programId and code
 
 function EditCourse () {
+  const dispatch = useDispatch();
   const navigate = useNavigate()
+    //Brings the programs, to edit the program which belongs the course
+    const programs = useSelector((state) => state.data.programs);
     //To get the course as an object
     const [item, setItem] = useState({});
+    //States to set the edited data in all fields    
     const [editedData, setEditedData] = useState({})
     const [description, setDescription] = useState('')
     const [code, setCode] = useState('')
     const [program, setProgram] = useState(0)
+    //States to check the form
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
+
 
 
     
     //Selecting the course id 
     const {id} = useParams();
     
- //if using axios
+  //if using axios
     /**
+      * To bring the programs
+      * useEffect(() => {
+        dispatch(getData('/programs'))
+      }, [])
+    */
+    /**
+     * To bring the selected item that´ll be edited
      * useEffect(() => {
         const fetchItem = async () => {
             const res = await getItemById('/courses/' + id);
@@ -84,6 +97,10 @@ function EditCourse () {
           }
         }
       */ 
+        const handleSubmit = (e) => {
+          e.preventDeaulT()
+          console.log('Submit')
+          }
 
     return (
          <>
@@ -111,14 +128,17 @@ function EditCourse () {
                           <h2>Editar programa: 
                       </h2>       
                               <select className={program == 0 ? 'empty' : ''} value={program} onChange={onProgramChange}>
-                                <option value={0}>Seleccionar opción</option>
-                                <option value={2}>Maestría en teología bíblica del NT </option>
-                                <option value={3}>Maestría en Estudios Teológicos con énfasis en Pastoral Urbana - Única</option>
-                                <option value={4}>Maestría en Ministerio y Liderazgo - Única</option>
-                                <option value={5}>Electivas Ministerio y Liderazgo: Consejería & Liderazgo - Única</option>
-                                <option value={6}>Maestría en Teologia Bíblica del NT - Única</option>
-                                <option value={7}>Cursos de Pre-grado - Única</option>
-                                <option value={8}>Electivas Maestría en Estudios Teológicos con énfasis en Pastoral Urbana - Única</option>
+                                <option value={0}>Select an option </option>
+                                {
+                                  programs.map(item => (
+                                      <option 
+                                        key={item.id}
+                                        value={item.id}
+                                      >
+                                        {item.description}
+                                      </option>
+                                  ))
+                                }
                               </select>
 
                       <h2>Editar código del curso: </h2>

@@ -11,7 +11,7 @@ function AllCourses () {
     const navigate = useNavigate();
 
     //States stored in the Store (redux-toolkit)
-    const programs = useSelector((state) => state.data.programs, shallowEqual);
+    const programs = useSelector((state) => state.data.programs);
     const courses = useSelector((state) => state.data.courses)
     const searchValue = useSelector((state) => state.data.searchValue);
     const loading = useSelector((state) => state.ui.loading)

@@ -1,11 +1,11 @@
 //Main data structure to be consumed
-//This file replace a relational db
+//This file replaces a relational db
 //Change this file to your needs, or connect to a db through 'useAxios.js'
 
 export const users = [
     {
         "id": 1,
-        "fullName": 'admin',
+        "fullName": 'Admin',
         "password": '1234567890',
         "location": 'USA',
         "gender": 'M',
@@ -14,7 +14,7 @@ export const users = [
     },
     {
 		"id": 2,
-		"fullName": "Profesor Mauro",
+		"fullName": "Teacher Mauro",
 		"documentNo": '19919119',
 		"gender": 'M',
 		"birthDate": '1994-05-04',

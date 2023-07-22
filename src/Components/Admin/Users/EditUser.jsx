@@ -51,7 +51,6 @@ function EditUser() {
       setFullName(item.fullName);
       setEmail(item.email);
       setRoleId(item.roleId);
-      setPassword(item.password);
 
     }, [item]);
 
@@ -87,6 +86,9 @@ function EditUser() {
           }
         }
       */ 
+        const handleSubmit = () => {
+          console.log('Submit')
+          }
     
     return (
         <>
@@ -121,6 +123,12 @@ function EditUser() {
                           </>
 
                 <h2>Role</h2>
+                        {
+                            //If you have set more user roles, you can add em manually as an opt 
+                            //with their respective id
+
+                            //If you have set other id to the roles, fix the code to your needs
+                        }
                     <select className={roleId == 0 ? 'empty': ''}  value={roleId} onChange={onRoleChange}>
                       <option value="0">Select an option</option>
                       <option value={2}>Teacher</option>    

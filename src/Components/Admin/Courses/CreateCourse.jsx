@@ -1,22 +1,55 @@
 import { useNavigate } from "react-router-dom";
-import { useForm } from "../../../Hooks/useForm";
-import { postData } from "../../../Hooks/useAxios";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+//File to manage a creation form
+import { useForm } from "../../../Hooks/useForm";
 import Succesfull from "../../Succesfull";
+import { useEffect } from "react";
+//Uncomment next line if using axios
+//import { postData, getAnything } from "../../../Hooks/useAxios";
+
+//If you need to create one more field or fix your fields to your needs:
+//Manage them where the useForm is being manipulated:
+    //-Add the fields´ name in the destructuration
+    //-Inside the function´s argument ({}) set the field and the type of variable
+    //Eg: teacher: '',
+    //If the value is a number, go to Hooks/useForm.js and add it in the conditional 
+//Copy and paste the sample jsx code of any field (like description)
+//And fix it according to the field you need
+
 
 function CreateCourse () {
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    //Brining programs to choose the new course's program
+    const programs = useSelector((state) => state.data.programs)
+    //States to check the form
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
 
-    const { description, code, onInputChange, onResetForm, formState, ProgramId } = useForm({
+    //useForm object being manipulated
+    //In the destructuration we bring the new state of the form and of all its fields
+    //In the args we set the initial state
+    //If wanna see how useForm is being used, go to Hooks/useForm.js
+    const { description, code, onInputChange, ProgramId, onResetForm, formState} = useForm({
         description: '',
         code: '',
         ProgramId: 0
     });
-    const handleSubmit = (e) => {
+
+    //If using axios
+    /**
+     * To get the programs
+     * useEffect(() => {
+        dispatch(getAnything('/programs'))
+    }, [])
+     */
+    /**
+     * const handleSubmit = (e) => {
         e.preventDefault();
         //if in the formState there is an empty value, it will not be sent to the database
+        //Also if you added another type of value, and you dont want it empty, 
+        //add it to the conditional: Eg. || value === []
         if (Object.values(formState).some(value => value === '' || value === 0)) {
             setNotFilled(true);
             return 
@@ -27,39 +60,57 @@ function CreateCourse () {
             setIsSent(true);
         }
     }
+     
+     */
+    //Comment this func if using axios
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Submit')
+    }
     return (
         <div className="comps-btw-lists">
-            {isSent && <Succesfull text={'Creado'}/>}
+
+            { isSent && <Succesfull text={'Created'} /> }
+
             <button className='back-button' onClick={() => navigate(-1)}>&lt;</button>
+
             <div className="title">
-                <h1>Nuevo Curso</h1>
+                <h1>New Course</h1>
             </div>
 
             <form onSubmit={handleSubmit} className="create-form" method="post">
-                <h2>Nombre:</h2>
+                <h2>Name:</h2>
                     <input
-                    className={description === '' ? 'empty' : ''}
-                    type="text" name="description" value={description} onChange={onInputChange} />
-                <h2>Codigo</h2>
+                        className={description === '' ? 'empty' : ''}
+                        type="text" name="description" value={description} onChange={onInputChange} 
+                    />
+
+                <h2>Code:</h2>
 
                     <input 
-                    className={code === '' ? 'empty' : ''}
-                    type="text" name='code' value={code} onChange={onInputChange}/>
-                <h2>Programa </h2>
-                <select className={ProgramId === 0 ? 'empty' : ''} name="ProgramId" value={ProgramId} onChange={onInputChange}>
-                    <option value={0}>Seleccionar opción</option>
-                    <option value={2}>Maestría en teología bíblica del NT </option>
-                    <option value={3}>Maestría en Estudios Teológicos con énfasis en Pastoral Urbana - Única</option>
-                    <option value={4}>Maestría en Ministerio y Liderazgo - Única</option>
-                    <option value={5}>Electivas Ministerio y Liderazgo: Consejería & Liderazgo - Única</option>
-                    <option value={6}>Maestría en Teologia Bíblica del NT - Única</option>
-                    <option value={7}>Cursos de Pre-grado - Única</option>
-                    <option value={8}>Electivas Maestría en Estudios Teológicos con énfasis en Pastoral Urbana - Única</option>
-                </select>   
+                        className={code === '' ? 'empty' : ''}
+                        type="text" name='code' value={code} onChange={onInputChange}
+                    />
 
-                {notFilled && <p className="error">Por favor llena todos los campos</p>}
+                <h2>Program:</h2>
 
-                <button className='clickable' type="submit">Enviar </button>
+                    <select className={ProgramId === 0 ? 'empty' : ''} name="ProgramId" value={ProgramId} onChange={onInputChange}>
+                        <option value={0}>Select an option</option>
+                            {
+                                programs.map(item => (
+                                    <option 
+                                        key={item.id}
+                                        value={item.id}
+                                    >
+                                    {item.description}
+                                </option>
+                                ))
+                            }
+                    </select>   
+
+                {notFilled && <p className="error">Fill all the fields</p>}
+
+                <button className='clickable' type="submit">Create</button>
             </form>
 
         

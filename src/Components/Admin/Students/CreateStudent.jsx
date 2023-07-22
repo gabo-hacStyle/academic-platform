@@ -1,51 +1,54 @@
 import { useNavigate } from "react-router-dom";
-//import { useContext } from "react";
-//import { AppContext } from "../../../Context/AppContext";
+import { useState } from "react";
+//File to manage a creation form
 import { useForm } from "../../../Hooks/useForm";
-import {  postData } from "../../../Hooks/useAxios";
-import { useEffect, useState } from "react";
-import { getCountries, getStates } from "../../../Hooks/useFetchLocation";
 import Succesfull from "../../Succesfull";
+import { useEffect } from "react";
+import { getCountries, getStates } from "../../../Hooks/useFetchLocation";
+import '../Styles/creation.css'
+
+//Uncomment next line if using axios and comment the following 
+//import { postData, getAnything } from "../../../Hooks/useAxios";
+import { users } from '../../../Hooks/data'
+
+//If you need to create one more field or fix your fields to your needs:
+//Manage them where the useForm is being manipulated:
+    //-Add the fields' name in the destructuration
+    //-Inside the function´s argument ({}) set the field and the type of variable
+    //Eg: preferences: [],
+    //If the value is a number, go to Hooks/useForm.js and add it in the conditional 
+//Copy and paste the sample jsx code of any field (like email)
+//And fix it according to the field you need
 
 function CreateStudent () {
     const navigate = useNavigate();
+    //States to check the form   
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
-   
-    //Form logic
+
+    //useForm object being manipulated
+    //In the destructuration we bring the new state of the form and of all its fields
+    //In the args we set the initial state
+    //If wanna see how useForm is being used, go to Hooks/useForm.js
     const { fullName,  
-         onInputChange, onResetForm, password, formState, email,
-        genre, location, documentNo } = useForm({
-        fullName: '',
-        password: '',
-        email: '',
-        documentNo: '',
-        genre: '',
-        location: '',
-        RoleId: 3
-    });
-    //State for the initial password
+            onInputChange, password, email,
+            gender, location, documentNo, onResetForm, formState} 
+            = useForm({
+                fullName: '',
+                password: '',
+                email: '',
+                documentNo: '',
+                gender: '',
+                location: '',
+                //Student's role = 3
+                RoleId: 3
+            });
+
+    //State for the initial password 
+    //in order to confirm if the user types the same pwd in both inputs
     const [initPsswd, setInitPsswd] = useState('');
         
     
-    //State to check if the form is filled
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        //if in the formState there is an empty value, it will not be sent to the database
-            if (Object.values(formState).some(value => value === '')) {
-                setNotFilled(true);
-                return 
-            } else {  
-                setNotFilled(false);
-                postData(formState, '/users')
-                onResetForm();
-                setIsSent(true);
-            }
-    }
-
-    
-
     //For the countries and cities dropdown list using thrid-party api
     const [countries, setCountries] = useState([]);
     const [states, setStates] = useState([]);
@@ -66,26 +69,72 @@ function CreateStudent () {
         })();
       }, [selectedCountry]);
 
+      //If using axios
+    /**
+     * 
+     const handleSubmit = (e) => {
+        e.preventDefault();
+
+        //if in the formState there is an empty value, it will not be sent to the database
+        //Also if you added another type of value, and you dont want it empty, 
+        //add it to the conditional: Eg. || value === []      
+        if (Object.values(formState).some(value => value === '')) {
+                setNotFilled(true);
+                return 
+            } else {  
+                setNotFilled(false);
+                postData(formState, '/users')
+                onResetForm();
+                setIsSent(true);
+            }
+    }
+     */
+    
+    //Comment this func if using axios
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        //if in the formState there is an empty value, it will not be sent to the database
+        //Also if you added another type of value, and you dont want it empty, 
+        //add it to the conditional: Eg. || value === 0      
+        if (Object.values(formState).some(value => value === '')) {
+            setNotFilled(true);
+            return 
+        } else {
+            setNotFilled(false);
+            console.log(formState)
+            users.push({a: 0, 2: 0})
+            onResetForm();
+            setIsSent(true);
+        }
+
+        console.log('Submit')
+    }
+
+
 
     return (
         <div className="comps-btw-lists">
-            {isSent && <Succesfull text={'Creado'}/>}
+
+            { isSent && <Succesfull text={'Created'} /> }
+            
             <button className="back-button clickable" onClick={() => navigate(-1)}>&lt;</button>
+            
             <div className="title">
-                <h1>Nuevo Estudiante</h1>
+                <h1>New Student </h1>
             </div>
         
             <form onSubmit={handleSubmit} className="create-form" method="post">
-                <h2>Nombre:</h2>
+                <h2>Name:</h2>
                     <input
-                        placeholder="Nombre completo"
+                        placeholder="Full name"
                         className={fullName === '' ? 'empty' : ''}
                         type="text" name='fullName' value={fullName} onChange={onInputChange} />
-                <h2>Ubicación </h2>
+                <h2>Location: </h2>
                     <select 
                         className={location === '' ? 'empty' : ''}
                         name="" value={selectedCountry} onChange={e => setSelectedCountry(e.target.value)} >
-                        <option value="">Selecciona tu pais</option>
+                        <option value="">Select country</option>
                         {
                             countries.map(country => (
                                 <option 
@@ -98,7 +147,7 @@ function CreateStudent () {
                     </select>
                         {(selectedCountry && states != null) && (
                             <select name='location' value={location} onChange={onInputChange}>
-                                <option value="">Selecciona tu estado</option>
+                                <option value="">Select state</option>
                                     {
                                     states.map(state => (
                                         <option 
@@ -113,45 +162,52 @@ function CreateStudent () {
                         )}
                     <p>{location}</p>
                     
-                        <h2>Contraseña</h2>
-                            <input 
-                                placeholder="Contraseña"
-                                className={initPsswd !== password ? 'error' : initPsswd === '' ? 'empty' : ''}
-                                type="password" name='init-psswdd' onChange={
-                                    (e) => setInitPsswd(e.target.value)
-                                } />
-                        <h2>Confirmar contraseña</h2>
-                                {
-                                    password != '' ? (initPsswd == password ? 
-                                        <p>Las contraseñas coinciden</p> : <p>Las contraseñas no coinciden</p>) 
-                                        : null 
-                                }
-                            <input
-                                placeholder="Confirmar contraseña"
-                                className={initPsswd !== password ? 'error' : initPsswd === '' ? 'empty' : ''}
-                                type="password" name='password' value={password} onChange={onInputChange} 
-                            />
-                    
-                <h2>Correo</h2>
-                    <input
-                        placeholder="Correo"
-                        className={email === '' ? 'empty' : ''}
-                        type="email" name='email' value={email} onChange={onInputChange} />
-                    <h2>Numero de documento</h2>
-                    <input
-                        className={documentNo === '' ? 'empty' : ''}
-                        type="number" name='documentNo' value={documentNo} onChange={onInputChange} />
-                <h2>Género</h2>
+                    <h2>Password:</h2>
+                        <input
+                            placeholder="Password"
+                            className={initPsswd !== password ? 'error' : initPsswd === '' ? 'empty' : ''}
+                            type="password" name='init-psswdd' onChange={
+                                (e) => setInitPsswd(e.target.value)
+                            } 
+                        />
 
-                <select
-                    className={genre === '' ? 'empty' : ''}
-                    name="genre" value={genre} onChange={onInputChange}>
-                    <option value="">Selecciona una opcion</option>
-                    <option value="F">Mujer</option>
-                    <option value="M">Hombre</option>
-                </select>
-                {notFilled && <p className="error">Por favor llena todos los campos</p>}
-                <button type="submit">Enviar </button>
+                    <h2>Confirm password:</h2>
+                        {
+                            password != '' ? (
+                                initPsswd == password ? 
+                                    <p>Passwords match</p> : <p>Passwords don't match</p>
+                                ) 
+                                : null 
+                        }
+                        <input 
+                            placeholder="Confirm password"
+                            className={initPsswd !== password ? 'error' : initPsswd === '' ? 'empty' : ''}
+                            type="password" name='password' value={password} onChange={onInputChange} 
+                        />
+                    
+                    <h2>Email</h2>
+                        <input 
+                            placeholder="Email"
+                            className={email === '' ? 'empty' : ''}
+                            type="email" name="email" onChange={onInputChange} value={email}
+                        />                    
+                    <h2>Document Number</h2>
+                        <input
+                            className={documentNo === '' ? 'empty' : ''}
+                            type="number" name='documentNo' value={documentNo} onChange={onInputChange} />
+                    <h2>Gender</h2>
+
+                        <select
+                            className={gender === '' ? 'empty' : ''}
+                            name="gender" value={gender} onChange={onInputChange}>
+                            <option value="">Select an option</option>
+                            <option value="F">Female</option>
+                            <option value="M">Male</option>
+                        </select>
+
+                { notFilled && <p className="error">Fill all the fields</p> }
+                
+                <button className='clickable' type="submit">Create </button>
             </form>
 
 

@@ -1,28 +1,32 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './ShowStudent.css'
-import { getEnrollments } from '../../Hooks/useAxios';
-import { useState } from 'react';
-//import { useEffect, useState } from "react";
-//import { getItemById } from "../../Hooks/useAxios";
+//import { getAnything  } from '../../Hooks/useAxios';
 
 function ShowStudent (props) {
     //State: enrrollments
-    const [enrollments, setEnrollments] = useState([]); 
-    const id = props.id;   
-    //Effect to bring an enpoint
-    useEffect(() => {
-        const fetchItem = async () => {
-            const res = await getEnrollments(id);
-            setEnrollments(res.data)
-        };
-        fetchItem();
-    }, []);
+    const [enrollments, setEnrollments] = useState([]);
+
+    const id = props.id
+
+    //If using axios 
+    /**
+     * 
+        //Effect to bring an enpoint
+        useEffect(() => {
+            const fetchItem = async () => {
+                const res = await getAnything(`/users/${id}/courses`);
+                setEnrollments(res.data)
+            };
+            fetchItem();
+        }, []);
+     */
+    
     
     return( 
         <div className="comps-btw-lists">
 
         <div className="student-page">
-        
+        {id}
             <p>
                 <b>Género:</b> {
                     (props.genre === 'M' ? 'Masculino' : 'Femenino')

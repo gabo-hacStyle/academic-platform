@@ -58,7 +58,7 @@ const baseUrl = 'http://localhost:4000';
 
   //Function to post data
   
-  const postData = async (data, endpoint) => {
+  export const postData = async (data, endpoint) => {
       try{
         console.log(data)
           const response = await instanceBackend.post(baseUrl + endpoint, data)
@@ -70,7 +70,7 @@ const baseUrl = 'http://localhost:4000';
 
   //Function to edit data
 
-  const editData = async (data, endpoint) => {
+  export const editData = async (data, endpoint) => {
       try{
           const response = await instanceBackend.put(baseUrl + endpoint, data)
           console.log(response.data)
@@ -128,4 +128,4 @@ const fetchStates = async (auth_token, country) => {
 };
 
 
-export { postData, editData, fetchCountries, fetchStates }
+export { fetchCountries, fetchStates }

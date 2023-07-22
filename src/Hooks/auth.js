@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { getToken, instanceBackend } from './useAxios';
+//import { getToken, instanceBackend } from './useAxios';
 import { useNavigate } from 'react-router-dom';
-import { setUsers, setCourses, setPrograms } from '../Slices/dataSlice';
+//import { setUsers, setCourses, setPrograms } from '../Slices/dataSlice';
 import { useDispatch } from 'react-redux';
 import { setFilters } from '../Slices/filtersSlice';
 
@@ -16,6 +16,7 @@ function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
   //Funcion para setear el token
+  /*
   instanceBackend.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
@@ -30,10 +31,13 @@ function AuthProvider({ children }) {
         return Promise.reject(error);
     }
 );
+   */
+  
 
   const login = async (user) => {
     console.log('login: ' + user);
-    //Bring the token
+    /**
+        //Bring the token
     await getToken(user)
     .then(
       (response) => {   
@@ -56,28 +60,31 @@ function AuthProvider({ children }) {
       console.log('oasasdjsa')
       
     });
+
+     */
   };
   
   const logout = () => {
     console.log('logout');
-    localStorage.removeItem('token');
-    dispatch(setUsers([]));
-    dispatch(setCourses([]));
-    dispatch(setPrograms([]));
-    dispatch(setFilters({
-      locations: [],
-      courses: [],
-      genders: [],
-      ages: [],
-      programs: [],
-    }));
-    setRole(null);
-    setIsAuthenticated(false);
-    navigate('/', {replace: true});
-
+    /**
+     * localStorage.removeItem('token');
+      dispatch(setUsers([]));
+      dispatch(setCourses([]));
+      dispatch(setPrograms([]));
+      dispatch(setFilters({
+        locations: [],
+        courses: [],
+        genders: [],
+        ages: [],
+        programs: [],
+      }));
+      setRole(null);
+      setIsAuthenticated(false);
+      navigate('/', {replace: true});
+     */
   };
   
-  const auth = { login, logout, role, isAuthenticated};
+  const auth = { login, logout };
 
   return (
     <AuthContext.Provider value={auth}>
