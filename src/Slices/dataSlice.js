@@ -1,7 +1,7 @@
 import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-//All items from the data.js file
-import { users, courses, programs } from "../Hooks/data"
+//All items from the useLocalStorage file
+import { users, courses, programs } from "../Hooks/useLocalStorage"
 
 //Uncomment the next lines if you are using your api,
 //the reducers (add any if you need) and the exportations
@@ -34,7 +34,7 @@ import { users, courses, programs } from "../Hooks/data"
  */
 
 
-//If bringing data from somewhere else, intialState is an empty array
+//If bringing data from somewhere else, your intialState may be an empty array
 //Eg. users: []
 const initialState =  {
     users: users,
@@ -52,7 +52,6 @@ export const dataSlice = createSlice({
         setSearchValue: (state, action) => {
             state.searchValue = action.payload;
         },
-        /**
             setUsers: (state, action) => {
                 state.users = action.payload;
             },
@@ -62,7 +61,7 @@ export const dataSlice = createSlice({
             setPrograms: (state, action) => {
                 state.programs = action.payload;
             },
-        */
+        
         
     }
 })
@@ -70,7 +69,7 @@ export const dataSlice = createSlice({
 
 export const {
     setSearchValue,
-    //setUsers, setPrograms, setCourses,
+    setUsers, setPrograms, setCourses,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

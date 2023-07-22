@@ -4,6 +4,8 @@ import { Filters } from "./Filters.jsx";
 import { Searcher } from "../Searcher.jsx";
 import { ShowStudent } from "./ShowStudent.jsx";
 import Loader from "../Loader.jsx";
+import useLocalStorage from "../../Hooks/useLocalStorage.js";
+import { setUsers } from "../../Slices/dataSlice.js";
 //Uncomment next line if using axios and you already configure it 
 //import { getData } from "../../Slices/dataSlice.js";
 
@@ -15,8 +17,8 @@ import Loader from "../Loader.jsx";
 //of a specific student 
 
 function Staff () {
-    //If using axios
-    //const dispatch = useDispatch();
+    
+    const dispatch = useDispatch();
    
     
     //State to open the view of a single item
@@ -31,8 +33,12 @@ function Staff () {
     const loading = useSelector((state) => state.ui.loading);
     const searchValue = useSelector((state) => state.data.searchValue);
 
-   //If using axios 
+    useEffect(() => {
+        const {data} = useLocalStorage('users', [])
+        dispatch(setUsers(data))
+    }, [])
 
+   //If using axios 
     /**
      * useEffect(() => {
         dispatch(getData('/users'));
