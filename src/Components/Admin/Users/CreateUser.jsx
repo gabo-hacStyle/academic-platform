@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "../../../Hooks/useForm";
 import Succesfull from "../../Succesfull";
 import { useEffect } from "react";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
 //Uncomment next line if using axios
 //import { postData, getAnything } from "../../../Hooks/useAxios";
 
@@ -21,6 +22,9 @@ function CreateUser () {
     //States to check the form   
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
+
+    //using localStorage, function addItem
+    const {addItem} = useLocalStorage('users', [])
 
     //useForm object being manipulated
     //In the destructuration we bring the new state of the form and of all its fields
@@ -68,7 +72,18 @@ function CreateUser () {
        //Comment this func if using axios
         const handleSubmit = (e) => {
             e.preventDefault(); 
-            console.log('Submit')
+            //if in the formState there is an empty value, it will not be sent to localStorage
+           //Also if you added another type of value, and you dont want it empty, 
+           //add it to the conditional: Eg. || value === []    
+           if (Object.values(formState).some(value => value === '')) {
+                setNotFilled(true);
+                return 
+            } else {  
+                setNotFilled(false);
+                addItem(formState)
+                onResetForm();
+                setIsSent(true);  
+             }
         }
     return (
         <div className="comps-btw-lists">

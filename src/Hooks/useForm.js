@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function useForm (intitialForm = {}) {
+function useForm (intitialForm) {
     //Setting the login and creation formState.
     const [formState, setFormState] = useState(intitialForm);
     const onInputChange = ({ target }) => {

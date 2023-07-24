@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { getCountries, getStates } from "../../../Hooks/useFetchLocation";
 import Succesfull from "../../Succesfull";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
+import { useSelector } from "react-redux";
+import { useForm } from "../../../Hooks/useForm";
 //Uncomment next line if using axios
 //import { editData, getItemById } from "../../../Hooks/useAxios";
 
@@ -18,23 +21,33 @@ import Succesfull from "../../Succesfull";
 //In this component I'm just editing three fields: FullName, location and Email
 function EditStudent () {
     const navigate= useNavigate();
-    //To get the course as an object
-    const [item, setItem] = useState({});
-    //States to set the edited data in all fields
-    const [editedData, setEditedData] = useState({})
-    const [fullName, setFullName] = useState('')
-    const [location, setLocation] = useState('');
-    const [email, setEmail] = useState('');
-    //States to check the form
-    const [notFilled, setNotFilled] = useState(false);
-    const [isSent, setIsSent] = useState(false);
+
+    const {editItem} = useLocalStorage('users');
+
+    
 
  
-    //Selecting the course id  from the url 
+    //Selecting the user id from the URL
     const {id} = useParams();
+    //Parsing id to number (with databases, you might delete this line)
+    //Cuz the endpoint must be a string and the id's are mostly strings
+    const parsedId = parseInt(id)
+
+
+    const users = useSelector((state) => state.data.users)
+    const userToEdit = users.find((user) => user.id === parsedId);
+
+    //Using the useForm hook 
+  const {formState, onInputChange} = useForm(userToEdit);
+  //States to check the form
+  const [notFilled, setNotFilled] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+ 
     
     //if using axios
     /**
+      //To get the course as an object
+    const [item, setItem] = useState({});
      * useEffect(() => {
         const fetchItem = async () => {
             const res = await getItemById('/users/' + id);
@@ -42,7 +55,7 @@ function EditStudent () {
         };
         fetchItem();
     }, [id]);
-     */
+
 
     //Setting the fields with the values brought from the item
     useEffect(() => {
@@ -59,12 +72,10 @@ function EditStudent () {
         email
       })
     }, [fullName, location,  email])
+     */
+
+    
   
-    //Updating the location
-   const onLocationChange = ({target}) => {
-        const {value} = target;
-        setLocation(value)
-    }
 
   //Using external api to get all locations arrount the world
   //Api accessable through axios, configure it in the 'Hooks/useAxios.js' file
@@ -107,8 +118,22 @@ function EditStudent () {
           }
         }
       */ 
-        const handleSubmit = () => {
-          console.log('Submit')
+        
+            const handleSubmit = (e) => {
+              e.preventDefault()
+              console.log('Submit')
+              //If in the formState there is an empty value, it will not be sent to the database
+              if (Object.values(formState).some(value => value === '' || value === 0)) {
+                setNotFilled(true);
+                return
+              } else {
+                setNotFilled(false);
+                //Sending the new object to localStorage
+                editItem(parsedId, formState)
+                setIsSent(true);
+              }
+            
+  
           }
     
     return (
@@ -118,30 +143,30 @@ function EditStudent () {
 
             <button className='back-button' onClick={() => navigate(-1)}>&lt;</button>
 
-            <h1>Editing the student: {item.fullName} </h1>
+            <h1>Editing the student: {formState.fullName} </h1>
               <form onSubmit={handleSubmit } className="create-form">
                 <h2>Name </h2>
                   <>
                         <input 
-                          className={fullName === '' ? 'empty' : ''}
+                          className={formState.fullName === '' ? 'empty' : ''}
                           type="text"
                           name='fullName'
-                          value={editedData.fullName}
-                          onChange={({target}) => setFullName(target.value)}
+                          value={formState.fullName}
+                          onChange={onInputChange}
                         />
-                        <span>New name: {fullName} </span>       
+                        <span>New name: {formState.fullName} </span>       
                   </>
 
                     <h2>Email: </h2>          
                         <>
                           <input 
-                              className={email === '' ? 'empty' : ''}
+                              className={formState.email === '' ? 'empty' : ''}
                               type="text"
                               name='email'
-                              value={editedData.email}
-                              onChange={({target}) => setEmail(target.value)}
+                              value={formState.email}
+                              onChange={onInputChange}
                           />
-                          <span>New email: {email}</span>  
+                          <span>New email: {formState.email}</span>  
                         </>
                         
                       
@@ -161,7 +186,7 @@ function EditStudent () {
 
                           {
                             (selectedCountry && states != null) && (
-                              <select name='location' value={location} onChange={onLocationChange}>
+                              <select name='location' value={formState.location} onChange={onInputChange}>
                                   <option value="">Select state</option>
                                       {
                                       states.map(state => (
@@ -177,7 +202,7 @@ function EditStudent () {
                             )
                           }
 
-                        <p style={{marginBottom: '16px'}}>Location: {editedData.location}</p>
+                        <p style={{marginBottom: '16px'}}>Location: {formState.location}</p>
                       
                       {notFilled && <p className="error">Fill all the fields</p>}
 

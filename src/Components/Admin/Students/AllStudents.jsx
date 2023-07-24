@@ -3,10 +3,14 @@ import { useNavigate } from "react-router-dom";
 //import { getData } from "../../../Slices/dataSlice";
 //import { useEffect } from "react";
 import Loader from "../../Loader";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
+import { useEffect } from "react";
+import { setUsers } from "../../../Slices/dataSlice";
 
 function AllStudents () {
+
     //If using axios
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
    
     //Bring the users from the store
@@ -16,6 +20,12 @@ function AllStudents () {
 
     const searchValue = useSelector((state) => state.data.searchValue);
     const loading = useSelector((state) => state.ui.loading)
+
+    const {data} =useLocalStorage('users', [])
+
+    useEffect(() => {
+        dispatch(setUsers(data))
+    }, [])
 
     //If using axios 
         /**

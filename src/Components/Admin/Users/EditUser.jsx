@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import Succesfull from "../../Succesfull";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
+import { useSelector } from "react-redux";
+import { useForm } from "../../../Hooks/useForm";
 
 //Uncomment next line if using axios
 //import { editData, getItemById } from "../../../Hooks/useAxios";
@@ -19,22 +22,30 @@ import Succesfull from "../../Succesfull";
 function EditUser() {
   //Navigate
   const navigate = useNavigate()
-
-  //To get the course as an object
-    const [item, setItem] = useState({});
-  //States to set the edited data in all fields
-    const [editedData, setEditedData] = useState({})
-    const [fullName, setFullName] = useState('')
-    const [roleId, setRoleId] = useState(0)
-    const [email, setEmail] = useState('')
+  //using localStorage, function editItem
+  const {editItem} = useLocalStorage('users');
+  //Selecting the user id from the URL
+  const {id} = useParams();
+  //Parsing id to number (with databases, you might delete this line)
+  //Cuz the endpoint must be a string and the id's are mostly strings
+  const parsedId = parseInt(id)
+ 
+  const users = useSelector((state) => state.data.users)
+  const userToEdit = users.find((user) => user.id === parsedId);
+ 
+  ////States to set the edited data in all fields
+  //Using the useForm hook 
+  const {formState, onInputChange} = useForm(userToEdit);
+ // const [roleId, setRoleId] = useState(0)
   //States to check the form
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
     
-    //Selecting the course id from the URL
-    const {id} = useParams();
-
+    
     //if using axios
+    //To get the user as an object (if using databases, to bring only the object to be edited)
+    //const [userToEdit, setUserToEdit] = useState({});
+
     /**
      * useEffect(() => {
         const fetchItem = async () => {
@@ -46,13 +57,17 @@ function EditUser() {
      */
     
   
-    //Setting the fields with the values brought from the item
+    
+    /**
+     * 
+     * //Setting the fields with the values brought from the item
+    //Also setting them when editing in the inputs 
     useEffect(() => {
-      setFullName(item.fullName);
-      setEmail(item.email);
-      setRoleId(item.roleId);
+      setFullName(userToEdit.fullName);
+      setEmail(userToEdit.email);
+      setRoleId(userToEdit.roleId);
 
-    }, [item]);
+    }, [userToEdit]);
 
     //When a field is changed, editedData Obj will update
     useEffect(() => {
@@ -62,13 +77,16 @@ function EditUser() {
           roleId,
       })
     }, [fullName, email, roleId, ])
+     */
+    
 
     //Roles are numbers, so they need to parseInt
-      const onRoleChange = ({target}) => {
+      
+    /**const onRoleChange = ({target}) => {
         const {value} = target;
         const valueInt = parseInt(value);
         setRoleId(valueInt)
-      }
+      }*/
       
       //Submitting button using axios
       /**
@@ -86,9 +104,20 @@ function EditUser() {
           }
         }
       */ 
-        const handleSubmit = () => {
+        const handleSubmit = (e) => {
+          e.preventDefault()
           console.log('Submit')
+          //If in the formState there is an empty value, it will not be sent to the database
+          if (Object.values(formState).some(value => value === '' || value === 0)) {
+            setNotFilled(true);
+            return
+          } else {
+            setNotFilled(false);
+            //Sending the new object to localStorage
+            editItem(parsedId, formState)
+            setIsSent(true);
           }
+        }
     
     return (
         <>
@@ -97,29 +126,30 @@ function EditUser() {
 
             {isSent && <Succesfull text={'Edited'}/>}
 
-            <h1>Editing user: {item.fullName} </h1>
+            <h1>Editing user: {userToEdit.fullName} </h1>
             <form onSubmit={handleSubmit} className='create-form'>
                 <h2>Name:</h2>
                   <>
                     <input 
-                        className={fullName == '' ? 'empty': ''}  
+                        className={formState.fullName == '' ? 'empty': ''}  
                         type="text"
                         name='fullName'
-                        value={editedData.fullName}
-                        onChange={({target}) => setFullName(target.value)}
+                        value={formState.fullName}
+                        onChange={onInputChange}
                     />
-                      <span>New name: {fullName} </span>
+
+                      <span>Name: {formState.fullName} </span>
                   </>    
                 <h2>Email: </h2>
                           <>
                               <input 
-                                className={email == '' ? 'empty': ''}
+                                className={formState.email == '' ? 'empty': ''}
                                 type="text"
                                 name='email'
-                                value={editedData.email}
-                                onChange={({target}) => setEmail(target.value)}
+                                value={formState.email}
+                                onChange={onInputChange}
                               />
-                              <span>New email: {email} </span>
+                              <span>New email: {formState.email} </span>
                           </>
 
                 <h2>Role</h2>
@@ -129,7 +159,7 @@ function EditUser() {
 
                             //If you have set other id to the roles, fix the code to your needs
                         }
-                    <select className={roleId == 0 ? 'empty': ''}  value={roleId} onChange={onRoleChange}>
+                    <select className={formState.roleId == 0 ? 'empty': ''}  name='roleId' value={formState.roleId} onChange={onInputChange}>
                       <option value="0">Select an option</option>
                       <option value={2}>Teacher</option>    
                       <option value={4}>Staff</option>
@@ -145,3 +175,9 @@ function EditUser() {
 }
 
 export {EditUser}
+
+function a () {
+  const users = [1, 2, 3, 4]
+  const e =  users.find(user => user === 1);
+  return e;
+}

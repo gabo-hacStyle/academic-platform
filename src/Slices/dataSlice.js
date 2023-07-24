@@ -1,7 +1,7 @@
 import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 //All items from the useLocalStorage file
-import { users, courses, programs } from "../Hooks/useLocalStorage"
+//import { data } from "../Hooks/useLocalStorage"
 
 //Uncomment the next lines if you are using your api,
 //the reducers (add any if you need) and the exportations
@@ -34,13 +34,28 @@ import { users, courses, programs } from "../Hooks/useLocalStorage"
  */
 
 
-//If bringing data from somewhere else, your intialState may be an empty array
-//Eg. users: []
+
 const initialState =  {
-    users: users,
-    courses: courses,
-    programs: programs,
-    
+    users: [],
+    courses: [],
+    programs: [
+        {
+            description: 'Eternidad', 
+            id: 1
+        },
+        {
+            id: 2,
+            description: 'Sanidad'
+        }, 
+        {
+            id: 3,
+            description: 'Verguenza'
+        }, 
+        {
+            id: 4,
+            description: 'Sapos'
+        }, 
+    ],
     searchValue: '',
 }
 
@@ -49,9 +64,9 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
-        setSearchValue: (state, action) => {
-            state.searchValue = action.payload;
-        },
+            setSearchValue: (state, action) => {
+                state.searchValue = action.payload;
+            },
             setUsers: (state, action) => {
                 state.users = action.payload;
             },

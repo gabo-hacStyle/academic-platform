@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "../../Loader";
 import './AllCourses.css';
+import { setCourses } from "../../../Slices/dataSlice";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
 
 function AllCourses () {
     //React, Navigate and Redux tools needed
@@ -15,12 +17,20 @@ function AllCourses () {
     const courses = useSelector((state) => state.data.courses)
     const searchValue = useSelector((state) => state.data.searchValue);
     const loading = useSelector((state) => state.ui.loading)
+
+    //To bring the data from users from localStorage
+    const {data} = useLocalStorage('courses', [])
     
     //To filter all the programs that match with the searcher text
+    
     const searchedPrograms = programs.filter((program) => {
         const text = program.description.toLowerCase();
         const searchText = searchValue.toLowerCase();
         return text.includes(searchText);
+    })
+     
+    useEffect(() => {
+        dispatch(setCourses(data))
     })
     
     //To filter all the courses that match with the searcher text
@@ -114,7 +124,8 @@ function AllCourses () {
                     {openPrograms.includes(item.id) && (
                             <ul className="item-courses-list dropdown-items">
                             {
-                                item.Courses.map((course, index) => (
+                                courses.filter(course => course.ProgramId === item.id)
+                                .map((course, index) => (
                                     <li key={index}>
                                         {course.description}
                                         <span>

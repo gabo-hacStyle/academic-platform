@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import '../Styles/editing.css'
 import Succesfull from "../../Succesfull";
 import { useSelector, useDispatch } from "react-redux";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
+import { useForm } from "../../../Hooks/useForm";
 //Uncomment next line if using axios
 //import { editData, getItemById } from "../../../Hooks/useAxios";
 
@@ -19,28 +21,40 @@ import { useSelector, useDispatch } from "react-redux";
 //In this component I'm just editing three fields: Description, programId and code
 
 function EditCourse () {
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     //Brings the programs, to edit the program which belongs the course
     const programs = useSelector((state) => state.data.programs);
+    const courses = useSelector((state) => state.data.courses);
     //To get the course as an object
-    const [item, setItem] = useState({});
-    //States to set the edited data in all fields    
-    const [editedData, setEditedData] = useState({})
-    const [description, setDescription] = useState('')
-    const [code, setCode] = useState('')
-    const [program, setProgram] = useState(0)
+    //const [item, setItem] = useState({});
+    
     //States to check the form
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
 
+    //using localStorage, function editItem
+    const {editItem} = useLocalStorage('courses');
 
 
     
     //Selecting the course id 
     const {id} = useParams();
+
+    //Parsing id to number (with databases, you might delete this line)
+    //Cuz the endpoint must be a string and the id's are mostly strings
+    const parsedId = parseInt(id)
+
+    const courseToEdit = courses.find((course) => course.id === parsedId);
+
+    //Using the useForm hook 
+    const {formState, onInputChange} = useForm(courseToEdit);
+      
+      
     
   //if using axios
+  //To get the user as an object (if using databases, to bring only the object to be edited)
+    //const [courseToEdit, setcourseToEdit] = useState({});
     /**
       * To bring the programs
       * useEffect(() => {
@@ -58,7 +72,9 @@ function EditCourse () {
     }, [id]);
      */
 
-  //Setting the fields with the values brought from the item  
+    /**
+     * 
+     * //Setting the fields with the values brought from the item  
     useEffect(() => {
       setDescription(item.description);
       setCode(item.code);
@@ -80,6 +96,8 @@ function EditCourse () {
         const valueInt = parseInt(value);
         setProgram(valueInt)
       }
+     */
+  
 
       //Submitting button using axios
       /**
@@ -97,37 +115,47 @@ function EditCourse () {
           }
         }
       */ 
-        const handleSubmit = (e) => {
-          e.preventDeaulT()
+      const handleSubmit = (e) => {
+          e.preventDefault()
           console.log('Submit')
+          //If in the formState there is an empty value, it will not be sent to the database
+          if (Object.values(formState).some(value => value === '' || value === 0)) {
+            setNotFilled(true);
+            return
+          } else {
+            setNotFilled(false);
+            //Sending the new object to localStorage
+            editItem(parsedId, formState)
+            setIsSent(true);
           }
+      }
+
 
     return (
          <>
                 <div className="comps-btw-lists">
                 <button className='back-button' onClick={() => navigate(-1)}>&lt;</button>
-                {isSent && <Succesfull text={'Editado'} />}
+                {isSent && <Succesfull text={'Edited'} />}
 
-                    <h1>{item.description}</h1>
+                    <h1>{formState.description}</h1>
                     <form onSubmit={handleSubmit} className="create-form">
-                      <h2>Editar nombre del curso: </h2>
+                      <h2>Name: </h2>
                       
                          
                           <>
                               <input 
-                                className={editedData.description === '' ? 'empty' : ''}
+                                className={formState.description === '' ? 'empty' : ''}
                                 type="text"
                                 name='description'
-                                value={editedData.description}
-                                onChange={({target}) => setDescription(target.value)}
+                                value={formState.description}
+                                onChange={onInputChange}
                               />
-                              <span style={{width: '80%'}}>Nuevo nombre: {description} </span>
+                              <span style={{width: '80%'}}>Name: {formState.description} </span>
                               
                           </>
                         
-                          <h2>Editar programa: 
-                      </h2>       
-                              <select className={program == 0 ? 'empty' : ''} value={program} onChange={onProgramChange}>
+                          <h2>Editar programa: </h2>       
+                              <select className={formState.ProgramId == 0 ? 'empty' : ''} name='ProgramId' value={formState.ProgramId} onChange={onInputChange}>
                                 <option value={0}>Select an option </option>
                                 {
                                   programs.map(item => (
@@ -141,22 +169,22 @@ function EditCourse () {
                                 }
                               </select>
 
-                      <h2>Editar código del curso: </h2>
+                      <h2>Code: </h2>
                       
                           
                             <input
-                                className={editedData.code === '' ? 'empty' : ''}
+                                className={formState.code === '' ? 'empty' : ''}
                                 type="text"
                                 name='code'
-                                value={editedData.code}
-                                onChange={({target}) => setCode(target.value)}
+                                value={formState.code}
+                                onChange={onInputChange}
                               />
-                            <span style={{marginBottom: '9px'}}>Nuevo código: {code}</span>
+                            <span style={{marginBottom: '9px'}}> Code: {formState.code}</span>
                       
                       
-                              {notFilled && <p className="error">Por favor llena todos los campos</p>}
+                              {notFilled && <p className="error">Fill all the fields</p>}
 
-                              <button type="submit">Guardar cambios </button>                        
+                              <button type="submit">Save changes </button>                        
                          </form>
                 </div>
         </>    

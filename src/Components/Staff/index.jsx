@@ -4,8 +4,8 @@ import { Filters } from "./Filters.jsx";
 import { Searcher } from "../Searcher.jsx";
 import { ShowStudent } from "./ShowStudent.jsx";
 import Loader from "../Loader.jsx";
-import useLocalStorage from "../../Hooks/useLocalStorage.js";
 import { setUsers } from "../../Slices/dataSlice.js";
+import useLocalStorage from "../../Hooks/useLocalStorage.js";
 //Uncomment next line if using axios and you already configure it 
 //import { getData } from "../../Slices/dataSlice.js";
 
@@ -23,20 +23,25 @@ function Staff () {
     
     //State to open the view of a single item
     const [view, setView] = useState(false);
-    //State to save the id of the item to view
+    //State to save the id of the item to  be viewed
     const [student, setStudent] = useState([]);
 
-    //Bring the users from the store
+
     const users = useSelector((state) => state.data.users);
     //The students are those which roleId is 3
     const students = users.filter((user) => user.roleId === 3);
+    //Bring the users from the store
     const loading = useSelector((state) => state.ui.loading);
     const searchValue = useSelector((state) => state.data.searchValue);
 
+    const {data} = useLocalStorage('users', [])
+
     useEffect(() => {
-        const {data} = useLocalStorage('users', [])
         dispatch(setUsers(data))
-    }, [])
+    }, [data, dispatch])
+
+   
+
 
    //If using axios 
     /**
@@ -45,10 +50,10 @@ function Staff () {
     }, []);
      */
     
+    
     //Filter all the student that match with the searcher's value
     const searchedStudents = students.filter((student) => {
-        //const text = student.fullName.toLowerCase();
-        const text = student.toLowerCase();
+        const text = student.fullName.toLowerCase();
         const searchText = searchValue.toLowerCase();
         return text.includes(searchText);
     }) 
@@ -69,13 +74,14 @@ function Staff () {
             setView(false);
         }
     }
+    console.log(students)
 
     return (
         <>
             <Filters />
 
             <Searcher />
-
+            
             <div className="list-container">
 
                 {loading && <Loader />}
@@ -119,7 +125,7 @@ function Staff () {
                                         )
                                     }
                         </> 
-                    )) 
+                    ))  
                     : 
                     students.map((item, index )=> (
                         <>

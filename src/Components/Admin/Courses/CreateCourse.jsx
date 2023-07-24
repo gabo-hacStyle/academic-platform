@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "../../../Hooks/useForm";
 import Succesfull from "../../Succesfull";
 import { useEffect } from "react";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
 //Uncomment next line if using axios
 //import { postData, getAnything } from "../../../Hooks/useAxios";
 
@@ -26,6 +27,8 @@ function CreateCourse () {
     //States to check the form
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
+
+    const {addItem} = useLocalStorage('courses', [])
 
     //useForm object being manipulated
     //In the destructuration we bring the new state of the form and of all its fields
@@ -64,8 +67,19 @@ function CreateCourse () {
      */
     //Comment this func if using axios
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Submit')
+            e.preventDefault(); 
+            //if in the formState there is an empty value, it will not be sent to localStorage
+           //Also if you added another type of value, and you dont want it empty, 
+           //add it to the conditional: Eg. || value === []    
+           if (Object.values(formState).some(value => value === '')) {
+                setNotFilled(true);
+                return 
+            } else {  
+                setNotFilled(false);
+                addItem(formState)
+                onResetForm();
+                setIsSent(true);  
+             }
     }
     return (
         <div className="comps-btw-lists">
@@ -92,7 +106,8 @@ function CreateCourse () {
                         type="text" name='code' value={code} onChange={onInputChange}
                     />
 
-                <h2>Program:</h2>
+                
+                  <h2>Program:</h2>
 
                     <select className={ProgramId === 0 ? 'empty' : ''} name="ProgramId" value={ProgramId} onChange={onInputChange}>
                         <option value={0}>Select an option</option>
@@ -107,6 +122,8 @@ function CreateCourse () {
                                 ))
                             }
                     </select>   
+                 
+                
 
                 {notFilled && <p className="error">Fill all the fields</p>}
 

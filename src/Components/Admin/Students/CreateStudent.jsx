@@ -6,10 +6,10 @@ import Succesfull from "../../Succesfull";
 import { useEffect } from "react";
 import { getCountries, getStates } from "../../../Hooks/useFetchLocation";
 import '../Styles/creation.css'
+import useLocalStorage from "../../../Hooks/useLocalStorage";
 
 //Uncomment next line if using axios and comment the following 
 //import { postData, getAnything } from "../../../Hooks/useAxios";
-import { users } from '../../../Hooks/data'
 
 //If you need to create one more field or fix your fields to your needs:
 //Manage them where the useForm is being manipulated:
@@ -26,6 +26,9 @@ function CreateStudent () {
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
 
+    //using localStorage, function addItem
+    const {addItem} = useLocalStorage('users', [])
+
     //useForm object being manipulated
     //In the destructuration we bring the new state of the form and of all its fields
     //In the args we set the initial state
@@ -41,7 +44,7 @@ function CreateStudent () {
                 gender: '',
                 location: '',
                 //Student's role = 3
-                RoleId: 3
+                roleId: 3
             });
 
     //State for the initial password 
@@ -92,24 +95,20 @@ function CreateStudent () {
     
     //Comment this func if using axios
     const handleSubmit = (e) => {
-        e.preventDefault();
-
-        //if in the formState there is an empty value, it will not be sent to the database
-        //Also if you added another type of value, and you dont want it empty, 
-        //add it to the conditional: Eg. || value === 0      
-        if (Object.values(formState).some(value => value === '')) {
-            setNotFilled(true);
-            return 
-        } else {
-            setNotFilled(false);
-            console.log(formState)
-            users.push({a: 0, 2: 0})
-            onResetForm();
-            setIsSent(true);
+            e.preventDefault(); 
+            //if in the formState there is an empty value, it will not be sent to localStorage
+           //Also if you added another type of value, and you dont want it empty, 
+           //add it to the conditional: Eg. || value === []    
+           if (Object.values(formState).some(value => value === '')) {
+                setNotFilled(true);
+                return 
+            } else {  
+                setNotFilled(false);
+                addItem(formState)
+                onResetForm();
+                setIsSent(true);  
+             }
         }
-
-        console.log('Submit')
-    }
 
 
 

@@ -1,17 +1,26 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 //import { getData } from "../../../Slices/dataSlice";
-//import { useEffect } from "react";
+import { useEffect } from "react";
 import Loader from "../../Loader";
+import useLocalStorage from "../../../Hooks/useLocalStorage";
+import { setUsers } from "../../../Slices/dataSlice";
 
 function AllUsers () {
+    const dispatch = useDispatch();
     //If using axios
     //const dispatch = useDispatch();
     const navigate = useNavigate();
     const users = useSelector((state) => state.data.users);
     const searchValue = useSelector((state) => state.data.searchValue)
     const loading = useSelector((state) => state.ui.loading);
-    
+    //To bring the data from users from localStorage
+    const {data} = useLocalStorage('users', [])
+
+    useEffect(() => {
+        dispatch(setUsers(data))
+    }, [])
+
     //If using axios
         /*
             useEffect(() => {
@@ -64,6 +73,7 @@ function AllUsers () {
                                 <li key={index}>
                                     {item.fullName} 
                                     {
+                                        /*This list only allows to edit users, not students */                                        
                                         item.roleId != 3 ? 
                                             <span><button 
                                             className="clickable"
