@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "../../../Hooks/useForm";
 import Succesfull from "../../Succesfull";
 import { useEffect } from "react";
-import { getCountries, getStates } from "../../../Hooks/useFetchLocation";
+import { getCountries } from "../../../Hooks/useFetchLocation";
 import '../Styles/creation.css'
 import useLocalStorage from "../../../Hooks/useLocalStorage";
 
@@ -52,10 +52,8 @@ function CreateStudent () {
     const [initPsswd, setInitPsswd] = useState('');
         
     
-    //For the countries and cities dropdown list using thrid-party api
+    //For the countries dropdown list using thrid-party api
     const [countries, setCountries] = useState([]);
-    const [states, setStates] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState('');
    
     //To bring the countries
     useEffect(() => {
@@ -64,13 +62,7 @@ function CreateStudent () {
             setCountries(countries);
         })();
       }, []);
-    //To bring the states of the selected country
-    useEffect(() => {
-        (async function () {
-            const states = await getStates(selectedCountry);
-            setStates(states);
-        })();
-      }, [selectedCountry]);
+    
 
       //If using axios
     /**
@@ -132,7 +124,7 @@ function CreateStudent () {
                 <h2>Location: </h2>
                     <select 
                         className={location === '' ? 'empty' : ''}
-                        name="" value={selectedCountry} onChange={e => setSelectedCountry(e.target.value)} >
+                        name="location" value={location} onChange={onInputChange} >
                         <option value="">Select country</option>
                         {
                             countries.map(country => (
@@ -144,22 +136,8 @@ function CreateStudent () {
                             ))
                         }
                     </select>
-                        {(selectedCountry && states != null) && (
-                            <select name='location' value={location} onChange={onInputChange}>
-                                <option value="">Select state</option>
-                                    {
-                                    states.map(state => (
-                                        <option 
-                                        key={state.state_name}
-                                        value={state.state_name}
-                                        >
-                                        {state.state_name}
-                                        </option>
-                                    ))
-                                    }
-                            </select>
-                        )}
-                    <p>{location}</p>
+                    
+                        <p>{location}</p>
                     
                     <h2>Password:</h2>
                         <input

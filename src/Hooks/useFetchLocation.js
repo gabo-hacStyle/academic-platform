@@ -5,6 +5,7 @@ import axios from "axios";
 export const getCountries = async () => {
     return await fetchCountries();
 };
+//If you wanna also get states
 export const getStates = async (selectedCountry) => {
     if (selectedCountry) {
       const tokenResponse = await axios.get('https://www.universal-tutorial.com/api/getaccesstoken', {

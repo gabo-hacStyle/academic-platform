@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
-import { getCountries, getStates } from "../../../Hooks/useFetchLocation";
+import { getCountries } from "../../../Hooks/useFetchLocation";
 import Succesfull from "../../Succesfull";
 import useLocalStorage from "../../../Hooks/useLocalStorage";
 import { useSelector } from "react-redux";
@@ -81,8 +81,6 @@ function EditStudent () {
   //Api accessable through axios, configure it in the 'Hooks/useAxios.js' file
 
   //For the countries and cities dropdown list
-     const [states, setStates] = useState([]);
-     const [selectedCountry, setSelectedCountry] = useState('');
      const [countries, setCountries] = useState([]);
      
      
@@ -93,14 +91,7 @@ function EditStudent () {
           setCountries(countries);
         })()
   }, []);
-
-  //To bring the states of the selected country
-  useEffect(() => {
-      (async function () {
-          const states = await getStates(selectedCountry);
-          setStates(states);
-      })()
-    }, [selectedCountry]);
+  
 
     //Submitting button using axios
       /**
@@ -171,7 +162,7 @@ function EditStudent () {
                         
                       
                     <h2>Location: </h2>       
-                      <select name="" value={selectedCountry} onChange={e => setSelectedCountry(e.target.value)} >
+                      <select name="location" value={formState.location} onChange={onInputChange} >
                           <option value="">Select country</option>
                           {
                               countries.map(country => (
@@ -183,24 +174,6 @@ function EditStudent () {
                               ))
                           }
                       </select>
-
-                          {
-                            (selectedCountry && states != null) && (
-                              <select name='location' value={formState.location} onChange={onInputChange}>
-                                  <option value="">Select state</option>
-                                      {
-                                      states.map(state => (
-                                          <option 
-                                            key={state.state_name}
-                                            value={state.state_name}
-                                          >
-                                            {state.state_name}
-                                          </option>
-                                      ))
-                                      }
-                              </select>
-                            )
-                          }
 
                         <p style={{marginBottom: '16px'}}>Location: {formState.location}</p>
                       

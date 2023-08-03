@@ -1,39 +1,37 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getFilters, setFilters } from "../../Slices/filtersSlice.js";
+import  { getFilters, setFilters } from "../../Slices/filtersSlice.js";
 import './Filters.css'
-import {  getData } from "../../Slices/dataSlice.js";
 import { useEffect, useState } from "react";
 import { ShowFilters } from './ShowFilters.jsx'
+import { getCountries, getStates } from "../../Hooks/useFetchLocation.js";
 function Filters () {
   const dispatch = useDispatch();
-  /**
-   *   const courses = useSelector((state) => state.data.courses);
-    const programs = useSelector((state) => state.data.programs);
+  const genders = useSelector((state) => state.filters.genders);
 
-   */
-  const locations = useSelector((state) => state.filters.locations);
-  const courses = [4, 55, 3, ]
-  const genders = useSelector((state) => state.filters.genders) ;
-  const ages = useSelector((state) => state.filters.ages);
-  const programs = [5, 243, 4, 5, 3]
+   
   const filters = useSelector((state) => state.filters.filters);
   //Estado para creacion de un modal
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
+  //Funcion para cerrar los filtros
+  const closeFilters = () => {
+    setModal(!modal);
+  }
 
-  /**
-  //Use effect to bring the getFilters
-  useEffect(() => {
-    dispatch(getData('/programs'))
-    dispatch(getData('/courses'))
-    dispatch(getFilters())
-  }, [dispatch])
-   */
+  //This is to filter according to a location:
+   //For the countries dropdown list using thrid-party api
+   const [countries, setCountries] = useState([]);
   
-  
+   //To bring the countries
+   useEffect(() => {
+       (async function () {
+           const countries = await getCountries();
+           setCountries(countries);
+       })();
+     }, []);
 
 
-      // Función para manejar el cambio en los filtros
+    // Función para manejar el cambio en los filtros
       const handleFilterChange = (category, value) => {
         const newFilters = {
           ...filters,
@@ -42,20 +40,14 @@ function Filters () {
         dispatch(setFilters(newFilters));
       };
     
-      // Función para enviar el query al backend
-      const handleSubmit = () => {
-        // Realizar la lógica de construir el query final con los valores de los filtros
-        console.log(filters)
-        //const query = buildQuery(filters);
-        // Enviar el query al backend
-        //sendQuery(query);
 
-        setModal(!modal);
-      };
-    
-      // Función para construir el query final con los valores de los filtros
+      //If using axios
+
+    /**
+     * 
+     * // Building the query by using the filters selected
       const buildQuery = (filters) => {
-        // Codificar el objeto en una cadena de texto para URL
+        // Object to string for the query
         const queryString = Object.entries(filters)
         .filter(([key, value]) => value.length > 0)
         .map(([key, value]) => {
@@ -66,18 +58,33 @@ function Filters () {
         })
         .join('&');
 
-      // Construir la URL con el query
-      const query = `/users?${queryString}`;
-      return query;
+        // Complete URL
+        const query = `/users?${queryString}`;
+        return query;
       };
     
-      // Función para enviar el query al backend
+      // Sending the query to the backend to create a new array with the  filtered students
       /*const sendQuery = (query) => {
         console.log(query)
         dispatch(getData(query)); 
-      };*/
+      };
 
-      //funcion para limpiar los filtros
+     *Handling the submit button
+     * const handleSubmit = () => {
+        console.log(filters)
+        const query = buildQuery(filters);
+        sendQuery(query);
+
+        setModal(!modal);
+      };
+      
+
+      */
+     
+      
+
+      //To clean filters
+
       /*const clearFilters = () => {
         dispatch(setFilters({
           locations: [],
@@ -88,11 +95,13 @@ function Filters () {
         }))
         dispatch(getData('/users'));
       }*/
-      //Funcion para cerrar los filtros
-      const closeFilters = () => {
-        setModal(!modal);
+
+      const handleSubmit =  (e) => {
+        e.preventDefault();
+        console.log(filters)
       }
 
+      
     
       return (
         <>  
@@ -113,29 +122,26 @@ function Filters () {
               <div>
 
               <h4>Ubicacion</h4>
-              {/*Locations rendered in a select html tag */}
-                <span style={{fontSize: '0.8rem'}}>*Si seleccionas mal, limpia filtros</span>
-                <select 
-                    style={{marginTop: '.8rem'}}  
-                    multiple
-                    className="filter-selects"
-                    value={filters.locations}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      //make the value be an array of values eg. location: ['location1', 'location2']
-                      handleFilterChange('locations',  [...filters.locations, value]);
-                    }}
-                >
-                 
-                  {locations.map((location) => (
-                    <option key={location.id} value={location.name}>{location.name}</option>
-                  ))}
-
-                </select>
-                    {/* Show the locations selected*/}
-                    <ShowFilters
-                      filters={filters.locations}
-                    />
+                    <select 
+                          onChange={(e) => {
+                            const { value } = e.target; 
+                            handleFilterChange('locations', value);
+                          }
+                        } >
+                        <option value="">Select country</option>
+                        {
+                            countries.map(country => (
+                                <option 
+                                key={country.country_name}
+                                value={country.country_name}>
+                                    {country.country_name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                  <p>{filters.locations}</p>
+                    
+                      
 
 
               
@@ -160,77 +166,7 @@ function Filters () {
                     ))}
                   </ul>
             </div>
-            <div>
-                  <h4> Rango de edades</h4>
-                  <ul className="filters-list">
-                    {ages.map((age) => (
-                      <label  className="filters-label" key={age}>
-                        <input
-
-                          className="filter-inputs"
-                          type="checkbox"
-                          value={age}
-                          checked={filters.ages.includes(age)}
-                          onChange={(e) => {
-                            const { checked, value } = e.target;
-                            handleFilterChange('ages', checked ? [...filters.ages, value] : filters.ages.filter((item) => item !== value));
-                          }}
-                          />
-                          {age}
-                      </label>
-                    ))}
-                  </ul>
-            </div>
-            
-            <div>
-                  <h4>Cursos</h4>
-                    <select 
-                      className="filter-selects"
-                      multiple
-                      value={filters.courses}
-                      onChange={(e) => {
-                        const { value } = e.target;
-                        handleFilterChange('courses',  [...filters.courses, value]);
-                      }}
-                  >
-                    {courses.map((course) => (
-                      <option key={course.id} value={course.id}>{course.description}</option>
-                    ))}
-                  
-                  </select>
-                  {/*show the courses selected */}
-                  <ShowFilters
-                    filters={filters.courses}
-                    iterable={true}
-                    list={courses}
-                  />
-
-            </div>
-            
-            <div>
-                  <h4>Programas</h4>
-                    <select
-                      className="filter-selects"
-                      multiple
-                      value={filters.programs}
-                      onChange={(e) => {
-                        const { value } = e.target;
-                        handleFilterChange('programs', [...filters.programs, value]);
-                      }}
-                  >
-                    {programs.map((program) => (
-                      <option key={program.id} value={program.id}>{program.description}</option>
-                    ))}
-                  
-                  </select>
-
-                  {/*show the programs selected */}
-                  <ShowFilters
-                    filters={filters.programs}
-                    iterable={true}
-                    list={programs}
-                  />
-            </div>        
+               
             <div>
               <button className='filters-btn clickable' onClick={handleSubmit}>Enviar</button>
             </div> 
@@ -259,8 +195,9 @@ function Filters () {
                             /> 
                         )
                     } 
-                    {
-                      /*Same, for the courses filter */
+                    {/**If you have any filter that is instead of a string, an array of elements
+                     * For example, courses or programs
+                      {
                       filters.courses.length > 0 && (
                          <ShowFilters 
                           filters={filters.courses}
@@ -268,20 +205,11 @@ function Filters () {
                           list={courses}
                           iterable={true}
                          />
-                      )
-                    }
-                    {
-                      /*Same, for the ages filter */
-                      filters.ages.length > 0 && (
-                        <ShowFilters 
-                          filters={filters.ages}
-                          title={'Edades'}
-                        />
-                      )
-                    }
-                    {
-                      /*Same, for the programs filter */
-                      filters.programs.length > 0 && (
+                        )
+                      }
+                    
+                      {
+                        filters.programs.length > 0 && (
                         <ShowFilters
                           filters={filters.programs}
                           title={'Programa(s)'}
@@ -289,7 +217,12 @@ function Filters () {
                           iterable={true} 
                         />
                       )
+                      }
+                      
+                    
+                      */
                     }
+                    
                 </ul>
             </section>
             }

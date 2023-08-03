@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-//All locations from the data.js file
-import { locations } from "../Hooks/data"
 
 //Uncomment the next lines if you are using your api,
 //the reducers (add any if you need) and the exportations
@@ -28,9 +26,9 @@ import { locations } from "../Hooks/data"
 //Eg. locations: []
 
 const initialState =  {
-    locations: locations,
+    locations: [],
     genders: ['M', 'F'],
-    ages: ['30-50', '51-70'],
+    
     filters: {
         locations : [],
         genders: [],
