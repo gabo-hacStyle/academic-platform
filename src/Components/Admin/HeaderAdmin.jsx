@@ -3,7 +3,7 @@ import './HeaderAdmin.css'
 import './Admin.css'
 import { useDispatch } from 'react-redux';
 import { setAdminList } from "../../Slices/uiSlice";
-import { useAuth } from '../../Hooks/auth';
+//import { useAuth } from '../../Hooks/auth';
 //import { useEffect } from 'react';
 
 //Header of the admin page. In charge of changing the state of the adminlist
@@ -12,7 +12,8 @@ import { useAuth } from '../../Hooks/auth';
 function HeaderAdmin () {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const auth = useAuth();
+    //const auth = useAuth();
+    
     //while user is editing or creating and wants to get back to the lists through the header 
     const {pathname} = useLocation();
     /**
@@ -41,7 +42,7 @@ function HeaderAdmin () {
 
     //Logout function
      const logout = () => {
-        auth.logout();
+        navigate('/')
     }
     return (
         <div>
@@ -63,7 +64,7 @@ function HeaderAdmin () {
                 </nav>
 
                 <button className='cerrar-sesion clickable'
-                 onClick={logout}>Cerrar sesión </button>
+                 onClick={logout}>Log out</button>
             </header>
             <Outlet />
         </div>

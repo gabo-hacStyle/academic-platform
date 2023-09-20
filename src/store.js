@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import dataReducer from './Slices/dataSlice';
 import uiReducer from './Slices/uiSlice';
-import filtersReducer from './Slices/filtersSlice';
-//Slices que creemos
+//Slices we create
 
 export const store = configureStore({
   reducer: {
     data: dataReducer,
     ui: uiReducer,
-    filters: filtersReducer,
   },
 });
 

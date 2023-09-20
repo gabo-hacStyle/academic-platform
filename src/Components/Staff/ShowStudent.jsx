@@ -26,52 +26,47 @@ function ShowStudent (props) {
         <div className="comps-btw-lists">
 
         <div className="student-page">
-        {id}
             <p>
-                <b>Género:</b> {
+                <b>Gender:</b> {
                     (props.genre === 'M' ? 'Masculino' : 'Femenino')
                 }
             </p>
             <p>
-                <b>Correo: </b>
+                <b>Email: </b>
                   {props.email || 'No registrado'}
             </p>
             <p>
-            <b>Ubicación: </b>
+            <b>Location: </b>
                   {props.location || 'No registrado'}
             </p>
             <p>
-            <b>Documento: </b>
+            <b>Document: </b>
                   {props.documentNo || 'No registrado'}
             </p>
-            <p>
-            <b>Fecha de nacimiento: </b>
-                    {props.birthDate || 'No registrado'}
-            </p>
-            
-            <p>
-            <b>Última actualización: </b>
-                    {props.updatedAt || 'No registrado'}
-            </p>
-            
-                
+        
 
         </div>
             
 
-            <div className="list-container user-courses">
-                <h3>Cursos a los que estuvo / está registrado</h3>
-                <ul className="app-list">   
-                    {
-                        enrollments.map((item, index) => (
-                            <li key={index}>
-                                {item.description}:  {item.finalScore}.0
-                            </li>
-                        ))
-                    }
+        {
+            /*
+            If you have enrollments for eache student, you can bring them here and display their grades, for example
+                <div className="list-container user-courses">
+                    <h3>Cursos a los que estuvo / está registrado</h3>
+                        <ul className="app-list">   
+                            {
+                                enrollments.map((item, index) => (
+                                    <li key={index}>
+                                        {item.description}:  {item.finalScore}.0
+                                    </li>
+                                ))
+                            }
 
-                </ul>
-            </div>
+                        </ul>
+                </div>
+             */
+        }
+           
         </div>
     )
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Filters } from "./Filters.jsx";
 import { Searcher } from "../Searcher.jsx";
 import { ShowStudent } from "./ShowStudent.jsx";
 import Loader from "../Loader.jsx";
@@ -78,7 +77,7 @@ function Staff () {
 
     return (
         <>
-            <Filters />
+           
 
             <Searcher />
             

@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import { setUsers, setCourses, setPrograms } from '../Slices/dataSlice';
 import { useDispatch } from 'react-redux';
-import { setFilters } from '../Slices/filtersSlice';
+//import { setFilters } from '../Slices/filtersSlice';
 
 const AuthContext = React.createContext();
 

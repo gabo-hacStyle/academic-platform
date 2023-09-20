@@ -20,10 +20,10 @@ import useLocalStorage from "../../../Hooks/useLocalStorage";
 
 
 function CreateCourse () {
-    const dispatch = useDispatch();
+    
+    //const dispatch = useDispatch();
     const navigate = useNavigate();
     //Brining programs to choose the new course's program
-    const programs = useSelector((state) => state.data.programs)
     //States to check the form
     const [notFilled, setNotFilled] = useState(false);
     const [isSent, setIsSent] = useState(false);
@@ -34,10 +34,10 @@ function CreateCourse () {
     //In the destructuration we bring the new state of the form and of all its fields
     //In the args we set the initial state
     //If wanna see how useForm is being used, go to Hooks/useForm.js
-    const { description, code, onInputChange, ProgramId, onResetForm, formState} = useForm({
+    const { description, code, teacher, onInputChange, onResetForm, formState} = useForm({
         description: '',
         code: '',
-        ProgramId: 0
+        teacher: ''
     });
 
     //If using axios
@@ -107,22 +107,13 @@ function CreateCourse () {
                     />
 
                 
-                  <h2>Program:</h2>
+                <h2>Teacher: </h2>
 
-                    <select className={ProgramId === 0 ? 'empty' : ''} name="ProgramId" value={ProgramId} onChange={onInputChange}>
-                        <option value={0}>Select an option</option>
-                            {
-                                programs.map(item => (
-                                    <option 
-                                        key={item.id}
-                                        value={item.id}
-                                    >
-                                    {item.description}
-                                </option>
-                                ))
-                            }
-                    </select>   
-                 
+                    <input
+                        className={teacher === '' ? 'empty' : ''}
+                        type="text" name="teacher" value={teacher} onChange={onInputChange} 
+                    />
+                    
                 
 
                 {notFilled && <p className="error">Fill all the fields</p>}

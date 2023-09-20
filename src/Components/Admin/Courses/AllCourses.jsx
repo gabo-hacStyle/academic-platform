@@ -6,6 +6,7 @@ import Loader from "../../Loader";
 import './AllCourses.css';
 import { setCourses } from "../../../Slices/dataSlice";
 import useLocalStorage from "../../../Hooks/useLocalStorage";
+import Empty from "../../Empty";
 
 function AllCourses () {
     //React, Navigate and Redux tools needed
@@ -13,26 +14,27 @@ function AllCourses () {
     const navigate = useNavigate();
 
     //States stored in the Store (redux-toolkit)
-    const programs = useSelector((state) => state.data.programs);
+
     const courses = useSelector((state) => state.data.courses)
     const searchValue = useSelector((state) => state.data.searchValue);
     const loading = useSelector((state) => state.ui.loading)
+
+    
 
     //To bring the data from users from localStorage
     const {data} = useLocalStorage('courses', [])
     
     //To filter all the programs that match with the searcher text
     
-    const searchedPrograms = programs.filter((program) => {
-        const text = program.description.toLowerCase();
-        const searchText = searchValue.toLowerCase();
-        return text.includes(searchText);
-    })
+    
      
     useEffect(() => {
         dispatch(setCourses(data))
     })
     
+    //State to check if there's no data
+
+
     //To filter all the courses that match with the searcher text
     const searchedCourses = courses.filter((course) => {
         const text = course.description.toLowerCase();
@@ -40,16 +42,6 @@ function AllCourses () {
         return text.includes(searchText);
     }) 
 
-
-    //Dropdown logic
-    const [openPrograms, setOpenPrograms] = useState([]);
-    const togglePrograms = (programId) => {
-        const programsToDropdown = openPrograms.includes(programId)
-        ? openPrograms.filter((id) => id !== programId) 
-        : [...openPrograms, programId];
-        
-        setOpenPrograms(programsToDropdown)
-    }
     
     //If using axios 
     /*
@@ -62,32 +54,29 @@ function AllCourses () {
 
     return (
         <>
-            {loading && <Loader />}
 
+
+            {loading && <Loader />}
+            
+            {courses.length === 0 && <Empty  text={"Courses"}/> }
                 {
                     //If searcher has a value, it will render both searched: programs & courses
                     //If the searcher is empty, it will render only the programs with a dropdown
                     //button that shows each program's courses
                 }
+            
 
             { 
+            
             searchValue ? 
                 <>
-                    <h3> Programs:</h3>
-                        {
-                            searchedPrograms.map((item, index) => (
-                                    <li key={index}>
-                                        {item.description}
-                                    </li>
-                            )) 
-                        }
                     <h3>Courses:</h3>
                         {
                                 <ul className="item-courses-list">
                                 {
                                     searchedCourses.map((course, index) => (
                                         <li key={index}>
-                                            {course.description}
+                                            {course.description} - {course.code} :  👨🏻‍🏫 {course.teacher}
                                             <span>
                                                 <button
                                                     className="clickable"
@@ -109,25 +98,9 @@ function AllCourses () {
                         }
                 </>  
             : 
-            programs.map((item) => (
-                <>
-                    <li key={item.id}>
-                        {item.description}
-                        <span className="dropdown-menu">
-                            <button
-                                className="dropdown-toggle clickable"
-                                onClick={() => togglePrograms(item.id)}
-                            >See courses
-                            </button>         
-                        </span>
-                    </li> 
-                    {openPrograms.includes(item.id) && (
-                            <ul className="item-courses-list dropdown-items">
-                            {
-                                courses.filter(course => course.ProgramId === item.id)
-                                .map((course, index) => (
+                       courses.map((course, index) => (
                                     <li key={index}>
-                                        {course.description}
+                                            {course.description} - {course.code} :👨🏻‍🏫 {course.teacher}
                                         <span>
                                             <button
                                                 className="clickable"
@@ -143,12 +116,7 @@ function AllCourses () {
                                         </span>
                                     </li>
                                 ))
-                            }
-                            </ul>
-                    )}
-                
-                </>
-            )) 
+
             }
         </>
     )

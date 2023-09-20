@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 //import { getData } from "../../../Slices/dataSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../../Loader";
 import useLocalStorage from "../../../Hooks/useLocalStorage";
 import { setUsers } from "../../../Slices/dataSlice";
+import Empty from "../../Empty";
 
 function AllUsers () {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function AllUsers () {
     const loading = useSelector((state) => state.ui.loading);
     //To bring the data from users from localStorage
     const {data} = useLocalStorage('users', [])
+
 
     useEffect(() => {
         dispatch(setUsers(data))
@@ -36,13 +38,15 @@ function AllUsers () {
     })   
     return (
         <>
-            {
-                loading ? <Loader/> 
-                : 
+            
+                {loading && <Loader />}
+
+                {users.length === 0  && <Empty text={"Users"} /> }
+
                 <> 
-                    <p style={{ marginBottom: '1rem' }}>
-                        *To edit the students, go to the students list
-                    </p>
+                <br /><br />
+                
+                
 
                     {
                      //If searcher has a value, render searchedUsers array,
@@ -50,8 +54,13 @@ function AllUsers () {
                     }
                     
                     {
+                        
                         searchValue ? searchedUsers.map((item, index )=> (
-                            <li key={index}>
+                            <>
+                                <p style={{ marginBottom: '1rem' }}>
+                                    *To edit the students, go to the students list
+                                </p>
+                                <li key={index}>
                                     {item.fullName} 
                                     {
                                         /*This list only allows to edit users, not students */
@@ -69,7 +78,14 @@ function AllUsers () {
                                             </button></span> : null
                                     }
                                 </li>
+                            </>
+                            
                         )) : users.map((item, index )=> (
+                            <>
+                                <p style={{ marginBottom: '1rem' }}>
+                                    *To edit the students, go to the students list
+                                </p>
+                                
                                 <li key={index}>
                                     {item.fullName} 
                                     {
@@ -88,11 +104,13 @@ function AllUsers () {
                                             </button></span> : null
                                     }
                                 </li>
+                            </>
+                                
                             ))
                     }
                 </>
                 
-            }
+            
                 
             
         </>

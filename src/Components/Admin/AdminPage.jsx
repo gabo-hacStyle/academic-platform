@@ -35,9 +35,9 @@ function AdminPage () {
                 {modal && 
                 <div className="modal-new-items">
                     <ul className="modal-list-container">
-                        <li className="clickable new-items" onClick={() => navigate('/admin/students/new')}>+ Estudiante</li>
-                        <li className="clickable new-items" onClick={() => navigate('/admin/courses/new')}>+ Curso</li>
-                        <li className="clickable new-items" onClick={() => navigate('/admin/users/new')}>+ Usuario</li>
+                        <li className="clickable new-items" onClick={() => navigate('/admin/students/new')}>+ Student</li>
+                        <li className="clickable new-items" onClick={() => navigate('/admin/courses/new')}>+ Course</li>
+                        <li className="clickable new-items" onClick={() => navigate('/admin/users/new')}>+ User</li>
                     </ul>
                 </div>
                 }

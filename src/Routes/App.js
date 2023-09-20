@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { LoginPage } from './LoginPage';
+import { WelcomePage } from './WelcomePage';
 import {Profile} from '../Components/Profile'
 import { Main } from './Main/index';
 import {NavBar} from '../Components/NavBar'
@@ -24,7 +24,7 @@ function App() {
                   <Route path='/' element={<NavBar />} >
                     <Route index
                       element={
-                        <LoginPage />} 
+                        <WelcomePage/>} 
                     />
                     <Route path='/staff' 
                       element={<Profile /> }>

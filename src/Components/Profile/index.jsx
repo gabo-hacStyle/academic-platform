@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import './Profile.css'
 import { Outlet,  useNavigate } from "react-router-dom/dist";
-import { useAuth } from "../../Hooks/auth";
+//import { useAuth } from "../../Hooks/auth";
 
 function Profile () {
+    const navigate = useNavigate()
    // const navigate = useNavigate();
-    const auth = useAuth();
+    //const auth = useAuth();
     //if the page is refreshed and the user is logged in, set the token
     /**
      * useEffect(() => {
@@ -18,7 +19,7 @@ function Profile () {
     
 
     const handleLogout = () => {
-        auth.logout();          
+        navigate('/')        
     }
     return (
         <div className="page">
@@ -38,7 +39,7 @@ function Profile () {
                         <button 
                         className="logout clickable"
                         onClick={handleLogout}
-                        > Cerrar sesion 
+                        > Log out 
                         </button>
                 </div>
 

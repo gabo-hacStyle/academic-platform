@@ -21,10 +21,9 @@ import { useForm } from "../../../Hooks/useForm";
 //In this component I'm just editing three fields: Description, programId and code
 
 function EditCourse () {
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const navigate = useNavigate()
     //Brings the programs, to edit the program which belongs the course
-    const programs = useSelector((state) => state.data.programs);
     const courses = useSelector((state) => state.data.courses);
     //To get the course as an object
     //const [item, setItem] = useState({});
@@ -154,21 +153,6 @@ function EditCourse () {
                               
                           </>
                         
-                          <h2>Editar programa: </h2>       
-                              <select className={formState.ProgramId == 0 ? 'empty' : ''} name='ProgramId' value={formState.ProgramId} onChange={onInputChange}>
-                                <option value={0}>Select an option </option>
-                                {
-                                  programs.map(item => (
-                                      <option 
-                                        key={item.id}
-                                        value={item.id}
-                                      >
-                                        {item.description}
-                                      </option>
-                                  ))
-                                }
-                              </select>
-
                       <h2>Code: </h2>
                       
                           
@@ -180,6 +164,19 @@ function EditCourse () {
                                 onChange={onInputChange}
                               />
                             <span style={{marginBottom: '9px'}}> Code: {formState.code}</span>
+                            
+                        
+                      <h2>Teacher: </h2>
+                      
+                          
+                            <input
+                                className={formState.teacher === '' ? 'empty' : ''}
+                                type="text"
+                                name='teacher'
+                                value={formState.teacher}
+                                onChange={onInputChange}
+                              />
+                            <span style={{marginBottom: '9px'}}> Teacher: {formState.teacher}</span>
                       
                       
                               {notFilled && <p className="error">Fill all the fields</p>}

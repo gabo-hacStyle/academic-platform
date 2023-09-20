@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 //import { useEffect } from "react";
 import Loader from "../../Loader";
 import useLocalStorage from "../../../Hooks/useLocalStorage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setUsers } from "../../../Slices/dataSlice";
+import Empty from "../../Empty";
 
 function AllStudents () {
 
@@ -20,6 +21,9 @@ function AllStudents () {
 
     const searchValue = useSelector((state) => state.data.searchValue);
     const loading = useSelector((state) => state.ui.loading)
+
+    //State to check if there's no data
+    
 
     const {data} =useLocalStorage('users', [])
 
@@ -44,6 +48,7 @@ function AllStudents () {
     return ( 
         <>
             {loading && <Loader />}
+            {students.length === 0 && <Empty text={"Students"}/> }
                     {
                      //If searcher has a value, render searchedStudents array,
                      //If the searcher is empty, render students array

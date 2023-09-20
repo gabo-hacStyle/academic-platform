@@ -6,10 +6,10 @@ function NavBar () {
         <>
             <nav className="main-navbar">
                 <div className="logo">
-                    FATELA 
+                    GABS
                 </div>
                 <div className="platform">
-                    Record Académico 📓
+                    PLATAFORMA ACADÉMICA 📓
                 </div>
             </nav>
             <Outlet />
