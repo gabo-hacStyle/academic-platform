@@ -50,7 +50,7 @@ function WelcomePage () {
 
                             
                             
-                            <button className="login-button">Entrar</button>
+                            <button className="login-button">Enter </button>
 
                             
                             
@@ -60,10 +60,11 @@ function WelcomePage () {
                     </div> 
         <br />
         <br />
-                    This platform can display a database  of all the students registered in your Institute
-                    If you are admin, you can create, edit and see all Students, Courses and Users (staff, for example)
-                            , if you are a staff member, you are able to see all students registered in your Institute and their detals which you can add in the database
-            
+                    <div id='app-info'>
+                        <p>
+                            A platform that displays the database of all the students registered in your Institute.
+                        </p>
+                    </div>
                        
         </>
     )

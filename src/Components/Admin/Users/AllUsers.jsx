@@ -12,11 +12,14 @@ function AllUsers () {
     //If using axios
     //const dispatch = useDispatch();
     const navigate = useNavigate();
-    const users = useSelector((state) => state.data.users);
+    const people = useSelector((state) => state.data.users);
+    const users = people.filter((person) => person.RoleId !== 3);
     const searchValue = useSelector((state) => state.data.searchValue)
     const loading = useSelector((state) => state.ui.loading);
     //To bring the data from users from localStorage
     const {data} = useLocalStorage('users', [])
+
+
 
 
     useEffect(() => {
@@ -57,9 +60,7 @@ function AllUsers () {
                         
                         searchValue ? searchedUsers.map((item, index )=> (
                             <>
-                                <p style={{ marginBottom: '1rem' }}>
-                                    *To edit the students, go to the students list
-                                </p>
+                                
                                 <li key={index}>
                                     {item.fullName} 
                                     {

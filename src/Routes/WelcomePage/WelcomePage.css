@@ -60,3 +60,6 @@ input:focus{
     align-items: center;
     justify-content: center;
 }
+#app-info{
+    text-align: center;
+}
