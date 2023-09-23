@@ -13,7 +13,7 @@ function AllUsers () {
     //const dispatch = useDispatch();
     const navigate = useNavigate();
     const people = useSelector((state) => state.data.users);
-    const users = people.filter((person) => person.RoleId !== 3);
+    const users = people.filter((person) => person.roleId !== 3);
     const searchValue = useSelector((state) => state.data.searchValue)
     const loading = useSelector((state) => state.ui.loading);
     //To bring the data from users from localStorage
@@ -44,7 +44,14 @@ function AllUsers () {
             
                 {loading && <Loader />}
 
-                {users.length === 0  && <Empty text={"Users"} /> }
+                {users.length === 0  && 
+                    <div style={{display: "flex"}}>
+                        <Empty text={"Users"} /> 
+
+                        <span>  Users: staff or teachers</span>
+                    </div>
+                    
+                }
 
                 <> 
                 <br /><br />
@@ -83,9 +90,7 @@ function AllUsers () {
                             
                         )) : users.map((item, index )=> (
                             <>
-                                <p style={{ marginBottom: '1rem' }}>
-                                    *To edit the students, go to the students list
-                                </p>
+                            
                                 
                                 <li key={index}>
                                     {item.fullName} 

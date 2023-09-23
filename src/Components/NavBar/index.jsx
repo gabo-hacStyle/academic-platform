@@ -9,7 +9,7 @@ function NavBar () {
                     GABS
                 </div>
                 <div className="platform">
-                    PLATAFORMA ACADÉMICA 📓
+                    ACADEMIC PLATFORM 📓
                 </div>
             </nav>
             <Outlet />

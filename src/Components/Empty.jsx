@@ -6,7 +6,7 @@ const Empty = ({text}) => {
     
     return (
                                   
-        <p>{text} list is empty!</p>
+        <p>{text} list is empty!  <span>                                                                                                                                                                                                                                                                                                                                                                                                 </span> </p>
                       
     );
 }
