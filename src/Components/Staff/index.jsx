@@ -116,7 +116,7 @@ function Staff () {
                                             <ShowStudent
                                                 id={item.id} 
                                                 location={item.location}
-                                                genre={item.genre}
+                                                gender={item.gender}
                                                 email={item.email}
                                                 documentNo={item.documentNo}
                                                 birthDate={item.birthDate}
