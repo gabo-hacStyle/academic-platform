@@ -28,7 +28,7 @@ function ShowStudent (props) {
         <div className="student-page">
             <p>
                 <b>Gender:</b> {
-                    (props.genre === 'M' ? 'Masculino' : 'Femenino')
+                    (props.gender === 'M' ? 'Masculino' : 'Femenino')
                 }
             </p>
             <p>
