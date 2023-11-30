@@ -2,6 +2,8 @@
 
 This is the frontend side built with ReactJS of an academic platform which will show student reports, and will allow the user (admin) to create and edit the data on it.
 
+[Link to the platform](https://academic-platform.vercel.app)
+
 ## The Platform
 At first glance, there is going to be a login page where you got to login to your account. After you are in, you will be able to se your profile and
 the programs you are in. Also, there's a menu bar to navigate either to the grades page, get back to the profile page or logout. 
