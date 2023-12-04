@@ -1,29 +1,61 @@
-# Academic Platform
+# Academic Platform 
 
-This is the frontend side built with ReactJS of an academic platform which will show student reports, and will allow the user (admin) to create and edit the data on it.
+Welcome to the frontend of the Academic Platform project! This application is designed to manage courses, students, and users within an academic institution.
 
-[Link to the platform](https://academic-platform.vercel.app)
+## Usage
+Visit the live version of the project: [Academic Platform](https://academic-platform.vercel.app).
 
-## The Platform
-At first glance, there is going to be a login page where you got to login to your account. After you are in, you will be able to se your profile and
-the programs you are in. Also, there's a menu bar to navigate either to the grades page, get back to the profile page or logout. 
-Also I'm looking forward to program the auth process for different users: 
-- Admin
-- Teacher
-- Student
+## Features
 
-## Getting Started with Create React App
+- **Course Management:** Admin-exclusive ablility to create, edit, and delete courses.
+- **User Management:** Admin-exclusive ability to create, edit, and delete users and students.
+- **Student Profiles:** View and manage student information as a 'staff' user.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technologies Used
 
-## Available Scripts
+- **ReactJS:** Frontend library for building user interfaces.
+- **React Router:** Navigation library for a dynamic, multi-page application.
+- **Redux Toolkit:** State management for React applications.
 
-In the project directory, you can run:
+## Data Storage
 
-### `npm start`
+The application utilizes `localStorage` for storing data locally.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To get started with the project, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone [link]
+   cd academic-platform
+   ```
+2. Install the dependencies:
+
+   ```bash
+   npm install 
+   ```
+3. Start the app:
+
+   ```bash
+   npm start
+   ```
+4. Open localhost:3000 in your browser
+
+## Contributing
+If you'd like to contribute, please fork the repository and create a new branch. Pull requests are welcome.
+
+## License
+This project is licensed under the MIT License.
+
+## Get in Touch
+Feel free to connect if you have questions or suggestions:
+
+Email:[gabo2023brazil@gmail.com](mailto:gabo2023brazil@gmail.com)
+LinkedIn: [LinkedIn](https://www.linkedin.com/in/gabriel-fajardo-ortiz-174b55268/)
+
+Created by [Gabriel Fajardo, @gabo-hacStyle]
+
+   
+   
