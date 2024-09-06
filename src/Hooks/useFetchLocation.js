@@ -3,23 +3,27 @@ import { fetchCountries, fetchStates } from "./useAxios";
 import axios from "axios";
 
 export const getCountries = async () => {
-    return await fetchCountries();
+  return await fetchCountries();
 };
 //If you wanna also get states
 export const getStates = async (selectedCountry) => {
-    if (selectedCountry) {
-      const tokenResponse = await axios.get('https://www.universal-tutorial.com/api/getaccesstoken', {
+  if (selectedCountry) {
+    const tokenResponse = await axios.get(
+      "https://www.universal-tutorial.com/api/getaccesstoken",
+      {
         headers: {
-          'Accept': 'application/json',
-          'api-token': '2WHo2gTMQ0DNpHj_MYeQgOxu2GdtD8RnpdwYXDsez4be5B5S8JrSHZutj2tpWCPefbw',
-          'user-email': 'gabo2023brazil@gmail.com'
-        }
-      });
+          Accept: "application/json",
+          "api-token":
+            "2WHo2gTMQ0DNpHj_MYeQgOxu2GdtD8RnpdwYXDsez4be5B5S8JrSHZutj2tpWCPefbw",
+          "user-email": "gabo2023brazil@gmail.com",
+        },
+      },
+    );
 
-      if (tokenResponse.data.auth_token) {
-        const auth_token = tokenResponse.data.auth_token;
+    if (tokenResponse.data.auth_token) {
+      const auth_token = tokenResponse.data.auth_token;
 
-        return await fetchStates(auth_token, selectedCountry);
-      }
-    } 
-  };
+      return await fetchStates(auth_token, selectedCountry);
+    }
+  }
+};

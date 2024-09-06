@@ -1,15 +1,15 @@
 // useLocalStorage.js
 
-import { useState } from 'react';
+import { useState } from "react";
 
 const useLocalStorage = (key, initialValue) => {
   // Obtenemos el valor almacenado en localStorage al iniciar el hook
   const storedValue = localStorage.getItem(key);
   //If it´s the first time
   const setItems = () => {
-    localStorage.setItem(key, JSON.stringify(initialValue))
-    return initialValue
-  }
+    localStorage.setItem(key, JSON.stringify(initialValue));
+    return initialValue;
+  };
   const initialData = storedValue ? JSON.parse(storedValue) : setItems();
 
   // Creamos un estado local para almacenar los datos

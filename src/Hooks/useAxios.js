@@ -2,7 +2,7 @@
 //or external APIs
 import axios from "axios";
 
-//This code is an example of how to fecth the data from an api 
+//This code is an example of how to fecth the data from an api
 //Like your own database (backend)
 //Using axios
 
@@ -81,51 +81,59 @@ const baseUrl = 'http://localhost:4000';
  * 
  */
 
-
 //Getting external APIs
 const fetchCountries = async () => {
   try {
-    const tokenResponse = await axios.get('https://www.universal-tutorial.com/api/getaccesstoken', {
-      headers: {
-        'Accept': 'application/json',
-        'api-token': '2WHo2gTMQ0DNpHj_MYeQgOxu2GdtD8RnpdwYXDsez4be5B5S8JrSHZutj2tpWCPefbw',
-        'user-email': 'gabo2023brazil@gmail.com',
-      }
-    });
+    const tokenResponse = await axios.get(
+      "https://www.universal-tutorial.com/api/getaccesstoken",
+      {
+        headers: {
+          Accept: "application/json",
+          "api-token":
+            "2WHo2gTMQ0DNpHj_MYeQgOxu2GdtD8RnpdwYXDsez4be5B5S8JrSHZutj2tpWCPefbw",
+          "user-email": "gabo2023brazil@gmail.com",
+        },
+      },
+    );
 
     if (tokenResponse.data.auth_token) {
       const auth_token = tokenResponse.data.auth_token;
 
-      const countriesResponse = await axios.get('https://www.universal-tutorial.com/api/countries/', {
-        headers: {
-          'Authorization': `Bearer ${auth_token}`,
-          'Accept': 'application/json'
-        }
-      });
+      const countriesResponse = await axios.get(
+        "https://www.universal-tutorial.com/api/countries/",
+        {
+          headers: {
+            Authorization: `Bearer ${auth_token}`,
+            Accept: "application/json",
+          },
+        },
+      );
 
       return countriesResponse.data;
     }
   } catch (error) {
-    console.log('Error al obtener países:', error);
+    console.log("Error al obtener países:", error);
     return [];
   }
 };
 
 const fetchStates = async (auth_token, country) => {
   try {
-    const response = await axios.get(`https://www.universal-tutorial.com/api/states/${country}`, {
-      headers: {
-        'Authorization': `Bearer ${auth_token}`,
-        'Accept': 'application/json'
-      }
-    });
+    const response = await axios.get(
+      `https://www.universal-tutorial.com/api/states/${country}`,
+      {
+        headers: {
+          Authorization: `Bearer ${auth_token}`,
+          Accept: "application/json",
+        },
+      },
+    );
 
     return response.data;
   } catch (error) {
-    console.log('Error al obtener estados:', error);
+    console.log("Error al obtener estados:", error);
     return [];
   }
 };
 
-
-export { fetchCountries, fetchStates }
+export { fetchCountries, fetchStates };

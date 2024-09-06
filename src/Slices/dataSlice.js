@@ -1,4 +1,4 @@
-import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 //All items from the useLocalStorage file
 //import { data } from "../Hooks/useLocalStorage"
@@ -8,8 +8,6 @@ import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 //import { getAnything } from "../Hooks/useAxios";
 //import { setLoading } from "./uiSlice";
-
-
 
 /**
  * const  getData  = createAsyncThunk(
@@ -33,59 +31,51 @@ import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 )
  */
 
-
-
-const initialState =  {
-    users: [],
-    courses: [],
-    programs: [
-        {
-            description: 'Eternidad', 
-            id: 1
-        },
-        {
-            id: 2,
-            description: 'Sanidad'
-        }, 
-        {
-            id: 3,
-            description: 'Verguenza'
-        }, 
-        {
-            id: 4,
-            description: 'Sapos'
-        }, 
-    ],
-    searchValue: '',
-}
-
+const initialState = {
+  users: [],
+  courses: [],
+  programs: [
+    {
+      description: "Eternidad",
+      id: 1,
+    },
+    {
+      id: 2,
+      description: "Sanidad",
+    },
+    {
+      id: 3,
+      description: "Verguenza",
+    },
+    {
+      id: 4,
+      description: "Sapos",
+    },
+  ],
+  searchValue: "",
+};
 
 export const dataSlice = createSlice({
-    name: 'data',
-    initialState,
-    reducers: {
-            setSearchValue: (state, action) => {
-                state.searchValue = action.payload;
-            },
-            setUsers: (state, action) => {
-                state.users = action.payload;
-            },
-            setCourses: (state, action) => {
-                state.courses = action.payload;
-            },
-            setPrograms: (state, action) => {
-                state.programs = action.payload;
-            },
-        
-        
-    }
-})
+  name: "data",
+  initialState,
+  reducers: {
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
+    setUsers: (state, action) => {
+      state.users = action.payload;
+    },
+    setCourses: (state, action) => {
+      state.courses = action.payload;
+    },
+    setPrograms: (state, action) => {
+      state.programs = action.payload;
+    },
+  },
+});
 
-
-export const {
-    setSearchValue,
-    setUsers, setPrograms, setCourses,
-} = dataSlice.actions;
+export const { setSearchValue, setUsers, setPrograms, setCourses } =
+  dataSlice.actions;
 
 export default dataSlice.reducer;
 //export {getData}

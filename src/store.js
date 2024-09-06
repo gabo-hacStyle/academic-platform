@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import dataReducer from './Slices/dataSlice';
-import uiReducer from './Slices/uiSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import dataReducer from "./Slices/dataSlice";
+import uiReducer from "./Slices/uiSlice";
 //Slices we create
 
 export const store = configureStore({
@@ -10,9 +10,7 @@ export const store = configureStore({
   },
 });
 
-
 //Probably the next lines will be for Typescript
-
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 //export type RootState = ReturnType<typeof store.getState>;

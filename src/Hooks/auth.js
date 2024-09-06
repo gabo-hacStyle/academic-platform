@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 //import { getToken, instanceBackend } from './useAxios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 //import { setUsers, setCourses, setPrograms } from '../Slices/dataSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 //import { setFilters } from '../Slices/filtersSlice';
 
 const AuthContext = React.createContext();
@@ -32,10 +32,9 @@ function AuthProvider({ children }) {
     }
 );
    */
-  
 
   const login = async (user) => {
-    console.log('login: ' + user);
+    console.log("login: " + user);
     /**
         //Bring the token
     await getToken(user)
@@ -63,9 +62,9 @@ function AuthProvider({ children }) {
 
      */
   };
-  
+
   const logout = () => {
-    console.log('logout');
+    console.log("logout");
     /**
      * localStorage.removeItem('token');
       dispatch(setUsers([]));
@@ -83,14 +82,10 @@ function AuthProvider({ children }) {
       navigate('/', {replace: true});
      */
   };
-  
+
   const auth = { login, logout };
 
-  return (
-    <AuthContext.Provider value={auth}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
 function useAuth() {
@@ -98,7 +93,4 @@ function useAuth() {
   return auth;
 }
 
-export {
-  AuthProvider,
-  useAuth,
-};
+export { AuthProvider, useAuth };

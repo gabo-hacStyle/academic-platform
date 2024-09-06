@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
-import './ShowStudent.css'
+import { useEffect, useState } from "react";
+import "./ShowStudent.css";
 //import { getAnything  } from '../../Hooks/useAxios';
 
-function ShowStudent (props) {
-    //State: enrrollments
-    const [enrollments, setEnrollments] = useState([]);
+function ShowStudent(props) {
+  //State: enrrollments
+  const [enrollments, setEnrollments] = useState([]);
 
-    const id = props.id
+  const id = props.id;
 
-    //If using axios 
-    /**
+  //If using axios
+  /**
      * 
         //Effect to bring an enpoint
         useEffect(() => {
@@ -20,36 +20,28 @@ function ShowStudent (props) {
             fetchItem();
         }, []);
      */
-    
-    
-    return( 
-        <div className="comps-btw-lists">
 
-        <div className="student-page">
-            <p>
-                <b>Gender:</b> {
-                    (props.gender === 'M' ? 'Masculino' : 'Femenino')
-                }
-            </p>
-            <p>
-                <b>Email: </b>
-                  {props.email || 'No registrado'}
-            </p>
-            <p>
-            <b>Location: </b>
-                  {props.location || 'No registrado'}
-            </p>
-            <p>
-            <b>Document: </b>
-                  {props.documentNo || 'No registrado'}
-            </p>
-        
+  return (
+    <div className="comps-btw-lists">
+      <div className="student-page">
+        <p>
+          <b>Gender:</b> {props.gender === "M" ? "Masculino" : "Femenino"}
+        </p>
+        <p>
+          <b>Email: </b>
+          {props.email || "No registrado"}
+        </p>
+        <p>
+          <b>Location: </b>
+          {props.location || "No registrado"}
+        </p>
+        <p>
+          <b>Document: </b>
+          {props.documentNo || "No registrado"}
+        </p>
+      </div>
 
-        </div>
-            
-
-        {
-            /*
+      {/*
             If you have enrollments for eache student, you can bring them here and display their grades, for example
                 <div className="list-container user-courses">
                     <h3>Cursos a los que estuvo / está registrado</h3>
@@ -64,10 +56,8 @@ function ShowStudent (props) {
 
                         </ul>
                 </div>
-             */
-        }
-           
-        </div>
-    )
+             */}
+    </div>
+  );
 }
-export {ShowStudent}
+export { ShowStudent };

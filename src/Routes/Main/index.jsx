@@ -1,8 +1,6 @@
-import { Staff } from '../../Components/Staff';
-function Main () {
-    return (
-        <Staff />
-    );
+import { Staff } from "../../Components/Staff";
+function Main() {
+  return <Staff />;
 }
 
-export {Main}
+export { Main };
