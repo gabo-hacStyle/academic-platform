@@ -1,10 +1,10 @@
 .profile-container {
   box-shadow: 1px 0 12px -6px #a0a0a0;
-  width: 86.3%;
+  /* width: 86.3%; */
   padding: 8px;
-  margin: 65px auto 10px;
+  /* margin: 65px auto 10px; */
   border-radius: 3px;
-  position: relative;
+  /* position: relative; */
 }
 .profile {
   display: flex;

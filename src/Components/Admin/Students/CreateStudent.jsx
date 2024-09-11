@@ -111,107 +111,136 @@ function CreateStudent() {
     <div className="comps-btw-lists">
       {isSent && <Succesfull text={"Created"} />}
 
-      <button className="back-button clickable" onClick={() => navigate(-1)}>
-        &lt;
-      </button>
+      
 
       <div className="title">
-        <h1>New Student </h1>
+        <h1>Creación de un nuevo estudiante </h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="create-form" method="post">
-        <h2>Name:</h2>
-        <input
-          placeholder="Full name"
-          className={fullName === "" ? "empty" : ""}
-          type="text"
-          name="fullName"
-          value={fullName}
-          onChange={onInputChange}
-        />
-        <h2>Location: </h2>
-        <select
-          className={location === "" ? "empty" : ""}
-          name="location"
-          value={location}
-          onChange={onInputChange}
-        >
-          <option value="">Select country</option>
-          {countries.map((country) => (
-            <option key={country.country_name} value={country.country_name}>
-              {country.country_name}
-            </option>
-          ))}
-        </select>
+      <form onSubmit={handleSubmit} className="w-[90%] max-w-md mx-auto p-6 bg-white rounded-lg shadow-md relative" method="post">
+  <button className="text-xs underline text-primary-blue/60 absolute top-0 left-4" onClick={() => navigate(-1)}>
+    &lt; Admin
+  </button>
 
-        <p>{location}</p>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
+      Name
+    </label>
+    <input
+      placeholder="Full name"
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${fullName === "" ? "empty" : ""}`}
+      type="text"
+      name="fullName"
+      value={fullName}
+      onChange={onInputChange}
+    />
+  </div>
 
-        <h2>Password:</h2>
-        <input
-          placeholder="Password"
-          className={
-            initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""
-          }
-          type="password"
-          name="init-psswdd"
-          onChange={(e) => setInitPsswd(e.target.value)}
-        />
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+      Location
+    </label>
+    <select
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${location === "" ? "empty" : ""}`}
+      name="location"
+      value={location}
+      onChange={onInputChange}
+    >
+      <option value="">Select country</option>
+      {countries.map((country) => (
+        <option key={country.country_name} value={country.country_name}>
+          {country.country_name}
+        </option>
+      ))}
+    </select>
+    <p className="text-sm text-gray-600 mt-2">{location}</p>
+  </div>
 
-        <h2>Confirm password:</h2>
-        {password != "" ? (
-          initPsswd == password ? (
-            <p>Passwords match</p>
-          ) : (
-            <p>Passwords don't match</p>
-          )
-        ) : null}
-        <input
-          placeholder="Confirm password"
-          className={
-            initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""
-          }
-          type="password"
-          name="password"
-          value={password}
-          onChange={onInputChange}
-        />
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="init-psswdd">
+      Password
+    </label>
+    <input
+      placeholder="Password"
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""}`}
+      type="password"
+      name="init-psswdd"
+      onChange={(e) => setInitPsswd(e.target.value)}
+    />
+  </div>
 
-        <h2>Email</h2>
-        <input
-          placeholder="Email"
-          className={email === "" ? "empty" : ""}
-          type="email"
-          name="email"
-          onChange={onInputChange}
-          value={email}
-        />
-        <h2>Document Number</h2>
-        <input
-          className={documentNo === "" ? "empty" : ""}
-          type="number"
-          name="documentNo"
-          value={documentNo}
-          onChange={onInputChange}
-        />
-        <h2>Gender</h2>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+      Confirm password
+    </label>
+    {password !== "" ? (
+      initPsswd === password ? (
+        <p className="text-green-500 text-xs italic">Passwords match</p>
+      ) : (
+        <p className="text-red-500 text-xs italic">Passwords don't match</p>
+      )
+    ) : null}
+    <input
+      placeholder="Confirm password"
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""}`}
+      type="password"
+      name="password"
+      value={password}
+      onChange={onInputChange}
+    />
+  </div>
 
-        <select
-          className={gender === "" ? "empty" : ""}
-          name="gender"
-          value={gender}
-          onChange={onInputChange}
-        >
-          <option value="">Select an option</option>
-          <option value="F">Female</option>
-          <option value="M">Male</option>
-        </select>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+      Email
+    </label>
+    <input
+      placeholder="Email"
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${email === "" ? "empty" : ""}`}
+      type="email"
+      name="email"
+      onChange={onInputChange}
+      value={email}
+    />
+  </div>
 
-        {notFilled && <p className="error">Fill all the fields</p>}
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="documentNo">
+      Document Number
+    </label>
+    <input
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${documentNo === "" ? "empty" : ""}`}
+      type="number"
+      name="documentNo"
+      value={documentNo}
+      onChange={onInputChange}
+    />
+  </div>
 
-        <button className="clickable" type="submit">
-          Create{" "}
-        </button>
-      </form>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender">
+      Gender
+    </label>
+    <select
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${gender === "" ? "empty" : ""}`}
+      name="gender"
+      value={gender}
+      onChange={onInputChange}
+    >
+      <option value="">Select an option</option>
+      <option value="F">Female</option>
+      <option value="M">Male</option>
+    </select>
+  </div>
+
+  {notFilled && <p className="text-red-500 text-xs italic mb-4">Fill all the fields</p>}
+
+  <div className="flex justify-end">
+    <button className="bg-primary-blue text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+      Crear
+    </button>
+  </div>
+</form>
     </div>
   );
 }

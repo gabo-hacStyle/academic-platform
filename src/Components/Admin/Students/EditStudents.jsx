@@ -5,6 +5,7 @@ import Succesfull from "../../Succesfull";
 import useLocalStorage from "../../../Hooks/useLocalStorage";
 import { useSelector } from "react-redux";
 import { useForm } from "../../../Hooks/useForm";
+
 //Uncomment next line if using axios
 //import { editData, getItemById } from "../../../Hooks/useAxios";
 
@@ -114,59 +115,77 @@ function EditStudent() {
 
   return (
     <>
-      <div className="comps-btw-lists">
+      <div className="">
         {isSent && <Succesfull text={"Edited"} />}
 
-        <button className="back-button" onClick={() => navigate(-1)}>
-          &lt;
-        </button>
+    
 
-        <h1>Editing the student: {formState.fullName} </h1>
-        <form onSubmit={handleSubmit} className="create-form">
-          <h2>Name </h2>
-          <>
-            <input
-              className={formState.fullName === "" ? "empty" : ""}
-              type="text"
-              name="fullName"
-              value={formState.fullName}
-              onChange={onInputChange}
-            />
-            <span>New name: {formState.fullName} </span>
-          </>
+        <h1>Editiando: {formState.fullName} </h1>
+        <form onSubmit={handleSubmit} className="w-[90%] max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md relative">
+  <button className="text-xs underline text-primary-blue/60 absolute top-0 left-4" onClick={() => navigate(-1)}>
+    &lt; Admin
+  </button>
 
-          <h2>Email: </h2>
-          <>
-            <input
-              className={formState.email === "" ? "empty" : ""}
-              type="text"
-              name="email"
-              value={formState.email}
-              onChange={onInputChange}
-            />
-            <span>New email: {formState.email}</span>
-          </>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
+      Name
+    </label>
+    <input
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${formState.fullName === "" ? "empty" : ""}`}
+      type="text"
+      name="fullName"
+      id="fullName"
+      value={formState.fullName}
+      onChange={onInputChange}
+    />
+    <span className="text-sm text-gray-600">New name: {formState.fullName}</span>
+  </div>
 
-          <h2>Location: </h2>
-          <select
-            name="location"
-            value={formState.location}
-            onChange={onInputChange}
-          >
-            <option value="">Select country</option>
-            {countries.map((country) => (
-              <option key={country.country_name} value={country.country_name}>
-                {country.country_name}
-              </option>
-            ))}
-          </select>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+      Email
+    </label>
+    <input
+      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${formState.email === "" ? "empty" : ""}`}
+      type="text"
+      name="email"
+      id="email"
+      value={formState.email}
+      onChange={onInputChange}
+    />
+    <span className="text-sm text-gray-600">New email: {formState.email}</span>
+  </div>
 
-          <p style={{ marginBottom: "16px" }}>Location: {formState.location}</p>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+      Location
+    </label>
+    <select
+      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      name="location"
+      id="location"
+      value={formState.location}
+      onChange={onInputChange}
+    >
+      <option value="">Select country</option>
+      {countries.map((country) => (
+        <option key={country.country_name} value={country.country_name}>
+          {country.country_name}
+        </option>
+      ))}
+    </select>
+    <p className="text-sm text-gray-600 mt-2">Location: {formState.location}</p>
+  </div>
 
-          {notFilled && <p className="error">Fill all the fields</p>}
+  {notFilled && <p className="text-red-500 text-xs italic mb-4">Fill all the fields</p>}
 
-          <button type="submit">Save changes</button>
-        </form>
+  <div className="flex justify-end">
+    <button className="bg-primary-blue text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+      Save changes
+    </button>
+  </div>
+</form>
+       
       </div>
     </>
   );

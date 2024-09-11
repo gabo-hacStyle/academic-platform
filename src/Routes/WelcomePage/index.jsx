@@ -28,24 +28,53 @@ function WelcomePage() {
 
   return (
     <>
-      <div id="welcome">
-        <h1 id="welcome-text">Welcome to Gabs academic Platform!</h1>
-      </div>
+    
 
       <div className="form-login--container">
-        <form onSubmit={enterEvent}>
-          <h2>
-            Good to have you once again here! What's your role in this platform?
-          </h2>
+      <form className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md" onSubmit={enterEvent}>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Bienvenido de nuevo! Por favor, ingresa tus credenciales.
+        </h2>
 
-          <select name="role" value={role} onChange={onInputChange}>
-            <option value="">Choose your role</option>
-            <option value="admin">Admin</option>
-            <option value="staff">Staff</option>
-          </select>
+        <div className="mb-4">
+          <label className="block  text-sm font-bold mb-2" htmlFor="username">
+            Usuario
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Usuario"
+            name="username"
+            // value={username}
+            // onChange={onInputChange}
+          />
+        </div>
 
-          <button className="login-button">Enter </button>
-        </form>
+        <div className="mb-6">
+          <label className="block  text-sm font-bold mb-2" htmlFor="password">
+            Contraseña
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type="password"
+            placeholder="********"
+            name="password"
+            // value={password}
+            // onChange={onInputChange}
+          />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-primary-blue  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Ingresar
+          </button>
+        </div>
+      </form>
       </div>
       <br />
       <br />

@@ -22,11 +22,11 @@ function Profile() {
     navigate("/");
   };
   return (
-    <div className="page">
+    <>
       <Sidebar />
       
       <div className="person-container">
-        <div className="profile-container">
+        <div className="profile-container my-8">
           <div className="profile">
             <figure>
               <img
@@ -38,15 +38,15 @@ function Profile() {
             </figure>
             <h1>Personal</h1>
 
-            <button className="logout clickable" onClick={handleLogout}>
-              {" "}
-              Log out
-            </button>
+            <button className="cursor-pointer border border-primary-blue px-2 rounded-sm
+       absolute right-7 top-0 " onClick={handleLogout}>
+          Log out
+        </button>
           </div>
         </div>
       </div>
       <Outlet />
-    </div>
+    </>
   );
 }
 

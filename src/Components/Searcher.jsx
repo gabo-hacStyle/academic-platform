@@ -8,7 +8,7 @@ function Searcher() {
     dispatch(setSearchValue(e.target.value));
   };
   return (
-    <div className="above">
+    <div className="w-full">
       <input
         className="admin-searcher"
         type="text"

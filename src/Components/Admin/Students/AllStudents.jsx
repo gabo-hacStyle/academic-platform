@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { setUsers } from "../../../Slices/dataSlice";
 import Empty from "../../Empty";
 
+import ListItem from "../../shared/ListItem";
+
 function AllStudents() {
   //If using axios
   const dispatch = useDispatch();
@@ -53,42 +55,10 @@ function AllStudents() {
       }
       {searchValue
         ? searchedStudents.map((item, index) => (
-            <li key={index}>
-              {item.fullName}
-              <span>
-                <button
-                  className="clickable"
-                  onClick={() => {
-                    navigate("/admin/students/edit/" + item.id, {
-                      state: {
-                        id: item.id,
-                      },
-                    });
-                  }}
-                >
-                  Editar
-                </button>
-              </span>
-            </li>
+            <ListItem key={index} item={item} route="/admin/students/edit/" />
           ))
         : students.map((item, index) => (
-            <li key={index}>
-              {item.fullName}
-              <span>
-                <button
-                  className="clickable"
-                  onClick={() => {
-                    navigate("/admin/students/edit/" + item.id, {
-                      state: {
-                        id: item.id,
-                      },
-                    });
-                  }}
-                >
-                  Editar
-                </button>
-              </span>
-            </li>
+            <ListItem key={index} item={item} route="/admin/students/edit/" />
           ))}
     </>
   );

@@ -43,30 +43,36 @@ function HeaderAdmin() {
     navigate("/");
   };
   return (
-    <div className="page">
+    <>
       <Sidebar />
-      <header className="header-container">
+      <header className="header-container my-8">
+
+      <button className="cursor-pointer border border-primary-blue px-2 rounded-sm
+       absolute right-7 top-0 " onClick={logout}>
+          Log out
+        </button>
         <h1>Admin Page</h1>
-        <nav className="navbar-for-admin">
-          <ul>
-            <li className="clickable" onClick={() => handleClick("students")}>
+        <nav>
+          <ul  className="flex">
+            <li className="clickable px-3 border border-primary-blue/50" onClick={() => handleClick("students")}>
               Estudiantes
             </li>
-            <li className="clickable" onClick={() => handleClick("courses")}>
+            <li className="clickable px-3 border border-primary-blue/50" onClick={() => handleClick("courses")}>
               Cursos
             </li>
-            <li className="clickable" onClick={() => handleClick("users")}>
+            <li className="clickable px-3 border border-primary-blue/50" onClick={() => handleClick("users")}>
               Usuarios
             </li>
           </ul>
         </nav>
 
-        <button className="cerrar-sesion clickable" onClick={logout}>
-          Log out
-        </button>
+        
       </header>
+      <div className="w-full">
       <Outlet />
-    </div>
+      </div>
+      
+    </>
   );
 }
 

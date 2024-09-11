@@ -69,7 +69,10 @@ function Staff() {
 
   return (
     <>
-      <Searcher />
+      <div className="mb-7 w-full">
+        <Searcher />
+      </div>
+      
 
       <div className="list-container">
         {loading && <Loader />}

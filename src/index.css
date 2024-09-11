@@ -18,13 +18,13 @@ body {
 li {
   list-style: none;
 }
-.list-container,
-.above,
-.comps-btw-lists {
+/* .list-container, */
+/* .above,
+ .comps-btw-lists {
   width: 90%;
   padding: 0;
   margin: 15px auto 15px;
-}
+} */
 .list-container {
   margin-bottom: 50px;
 }

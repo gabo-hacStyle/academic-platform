@@ -22,15 +22,15 @@ function AdminPage() {
     setModal(!modal);
   };
   return (
-    <div>
-      <div className="comps-btw-lists ">
-        <div className="search-and-new">
+    <>
+      <div >
+        <div className="flex items-center w-full mb-6 gap-3">
           <Searcher />
           <button
             onClick={() => handleClick()}
             className="btn-for-new clickable"
           >
-            +
+            <span className="hidden md:inline">Nuevo </span>+
           </button>
         </div>
         {modal && (
@@ -68,7 +68,7 @@ function AdminPage() {
           <AllStudents />
         )}
       </ul>
-    </div>
+    </>
   );
 }
 export { AdminPage };
