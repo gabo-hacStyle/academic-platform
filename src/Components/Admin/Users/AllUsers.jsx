@@ -6,9 +6,17 @@ import Loader from "../../Loader";
 import useLocalStorage from "../../../Hooks/useLocalStorage";
 import { setUsers } from "../../../Slices/dataSlice";
 import Empty from "../../Empty";
+import { setItemId, setFormToRender } from "../../../Slices/uiSlice";
+import ListItem from "../../shared/ListItem";
+import ShowItemDetails from "../shared/ShowItemDetails";
 
 function AllUsers() {
   const dispatch = useDispatch();
+
+  const [view, setView] = useState(false);
+  //Estados para guardar el id del item a ver
+  const [itemsToShow, setItemsToShow] = useState([]);
+
   //If using axios
   //const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,6 +44,7 @@ function AllUsers() {
     const searchText = searchValue.toLowerCase();
     return text.includes(searchText);
   });
+
   return (
     <>
       {loading && <Loader />}
@@ -49,9 +58,6 @@ function AllUsers() {
       )}
 
       <>
-        <br />
-        <br />
-
         {
           //If searcher has a value, render searchedUsers array,
           //If the searcher is empty, render students array
@@ -60,54 +66,54 @@ function AllUsers() {
         {searchValue
           ? searchedUsers.map((item, index) => (
               <>
-                <li key={index}>
-                  {item.fullName}
-                  {
-                    /*This list only allows to edit users, not students */
-                    item.roleId != 3 ? (
-                      <span>
-                        <button
-                          className="clickable"
-                          onClick={() => {
-                            navigate("/admin/users/edit/" + item.id, {
-                              state: {
-                                id: item.id,
-                              },
-                            });
-                          }}
-                        >
-                          Editar
-                        </button>
-                      </span>
-                    ) : null
-                  }
-                </li>
+                <ListItem
+                  key={index}
+                  item={item}
+                  formToRender={"editUser"}
+                  view={view}
+                  itemsToShow={itemsToShow}
+                  setItemsToShow={setItemsToShow}
+                  setView={setView}
+                />
+                {
+                  //If view is true, it will render the view of the item
+                  view && itemsToShow.includes(item.id) && (
+                    <ShowItemDetails
+                      id={item.id}
+                      location={item.location}
+                      gender={item.gender}
+                      email={item.email}
+                      documentNo={item.documentNo}
+                      birthDate={item.birthDate}
+                    />
+                  )
+                }
               </>
             ))
           : users.map((item, index) => (
               <>
-                <li key={index}>
-                  {item.fullName}
-                  {
-                    /*This list only allows to edit users, not students */
-                    item.roleId != 3 ? (
-                      <span>
-                        <button
-                          className="clickable"
-                          onClick={() => {
-                            navigate("/admin/users/edit/" + item.id, {
-                              state: {
-                                id: item.id,
-                              },
-                            });
-                          }}
-                        >
-                          Editar
-                        </button>
-                      </span>
-                    ) : null
-                  }
-                </li>
+                <ListItem
+                  key={index}
+                  item={item}
+                  formToRender={"editUser"}
+                  view={view}
+                  itemsToShow={itemsToShow}
+                  setItemsToShow={setItemsToShow}
+                  setView={setView}
+                />
+                {
+                  //If view is true, it will render the view of the item
+                  view && itemsToShow.includes(item.id) && (
+                    <ShowItemDetails
+                      id={item.id}
+                      location={item.location}
+                      gender={item.gender}
+                      email={item.email}
+                      documentNo={item.documentNo}
+                      birthDate={item.birthDate}
+                    />
+                  )
+                }
               </>
             ))}
       </>

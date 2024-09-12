@@ -20,11 +20,11 @@ import useLocalStorage from "../../../Hooks/useLocalStorage";
 //Copy and paste the sample jsx code of any field (like email)
 //And fix it according to the field you need
 
-function CreateStudent() {
+function CreateStudent({ setIsSent }) {
   const navigate = useNavigate();
   //States to check the form
   const [notFilled, setNotFilled] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  // const [isSent, setIsSent] = useState(false);
 
   //using localStorage, function addItem
   const { addItem } = useLocalStorage("users", []);
@@ -108,140 +108,160 @@ function CreateStudent() {
   };
 
   return (
-    <div className="comps-btw-lists">
-      {isSent && <Succesfull text={"Created"} />}
+    // <div className="comps-btw-lists">
+    //   {isSent && <Succesfull text={"Created"} />}
 
-      
+    //   <div className="title">
+    //     <h1>Creación de un nuevo estudiante </h1>
+    //   </div>
 
-      <div className="title">
-        <h1>Creación de un nuevo estudiante </h1>
+    <form onSubmit={handleSubmit} method="post">
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="fullName"
+        >
+          Name
+        </label>
+        <input
+          placeholder="Full name"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${fullName === "" ? "empty" : ""}`}
+          type="text"
+          name="fullName"
+          value={fullName}
+          onChange={onInputChange}
+        />
       </div>
 
-      <form onSubmit={handleSubmit} className="w-[90%] max-w-md mx-auto p-6 bg-white rounded-lg shadow-md relative" method="post">
-  <button className="text-xs underline text-primary-blue/60 absolute top-0 left-4" onClick={() => navigate(-1)}>
-    &lt; Admin
-  </button>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="location"
+        >
+          Location
+        </label>
+        <select
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${location === "" ? "empty" : ""}`}
+          name="location"
+          value={location}
+          onChange={onInputChange}
+        >
+          <option value="">Select country</option>
+          {countries.map((country) => (
+            <option key={country.country_name} value={country.country_name}>
+              {country.country_name}
+            </option>
+          ))}
+        </select>
+        <p className="text-sm text-gray-600 mt-2">{location}</p>
+      </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
-      Name
-    </label>
-    <input
-      placeholder="Full name"
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${fullName === "" ? "empty" : ""}`}
-      type="text"
-      name="fullName"
-      value={fullName}
-      onChange={onInputChange}
-    />
-  </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="init-psswdd"
+        >
+          Password
+        </label>
+        <input
+          placeholder="Password"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""}`}
+          type="password"
+          name="init-psswdd"
+          onChange={(e) => setInitPsswd(e.target.value)}
+        />
+      </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
-      Location
-    </label>
-    <select
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${location === "" ? "empty" : ""}`}
-      name="location"
-      value={location}
-      onChange={onInputChange}
-    >
-      <option value="">Select country</option>
-      {countries.map((country) => (
-        <option key={country.country_name} value={country.country_name}>
-          {country.country_name}
-        </option>
-      ))}
-    </select>
-    <p className="text-sm text-gray-600 mt-2">{location}</p>
-  </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="password"
+        >
+          Confirm password
+        </label>
+        {password !== "" ? (
+          initPsswd === password ? (
+            <p className="text-green-500 text-xs italic">Passwords match</p>
+          ) : (
+            <p className="text-red-500 text-xs italic">Passwords don't match</p>
+          )
+        ) : null}
+        <input
+          placeholder="Confirm password"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""}`}
+          type="password"
+          name="password"
+          value={password}
+          onChange={onInputChange}
+        />
+      </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="init-psswdd">
-      Password
-    </label>
-    <input
-      placeholder="Password"
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""}`}
-      type="password"
-      name="init-psswdd"
-      onChange={(e) => setInitPsswd(e.target.value)}
-    />
-  </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="email"
+        >
+          Email
+        </label>
+        <input
+          placeholder="Email"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${email === "" ? "empty" : ""}`}
+          type="email"
+          name="email"
+          onChange={onInputChange}
+          value={email}
+        />
+      </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-      Confirm password
-    </label>
-    {password !== "" ? (
-      initPsswd === password ? (
-        <p className="text-green-500 text-xs italic">Passwords match</p>
-      ) : (
-        <p className="text-red-500 text-xs italic">Passwords don't match</p>
-      )
-    ) : null}
-    <input
-      placeholder="Confirm password"
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${initPsswd !== password ? "error" : initPsswd === "" ? "empty" : ""}`}
-      type="password"
-      name="password"
-      value={password}
-      onChange={onInputChange}
-    />
-  </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="documentNo"
+        >
+          Document Number
+        </label>
+        <input
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${documentNo === "" ? "empty" : ""}`}
+          type="number"
+          name="documentNo"
+          value={documentNo}
+          onChange={onInputChange}
+        />
+      </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-      Email
-    </label>
-    <input
-      placeholder="Email"
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${email === "" ? "empty" : ""}`}
-      type="email"
-      name="email"
-      onChange={onInputChange}
-      value={email}
-    />
-  </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="gender"
+        >
+          Gender
+        </label>
+        <select
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${gender === "" ? "empty" : ""}`}
+          name="gender"
+          value={gender}
+          onChange={onInputChange}
+        >
+          <option value="">Select an option</option>
+          <option value="F">Female</option>
+          <option value="M">Male</option>
+        </select>
+      </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="documentNo">
-      Document Number
-    </label>
-    <input
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${documentNo === "" ? "empty" : ""}`}
-      type="number"
-      name="documentNo"
-      value={documentNo}
-      onChange={onInputChange}
-    />
-  </div>
+      {notFilled && (
+        <p className="text-red-500 text-xs italic mb-4">Fill all the fields</p>
+      )}
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender">
-      Gender
-    </label>
-    <select
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${gender === "" ? "empty" : ""}`}
-      name="gender"
-      value={gender}
-      onChange={onInputChange}
-    >
-      <option value="">Select an option</option>
-      <option value="F">Female</option>
-      <option value="M">Male</option>
-    </select>
-  </div>
-
-  {notFilled && <p className="text-red-500 text-xs italic mb-4">Fill all the fields</p>}
-
-  <div className="flex justify-end">
-    <button className="bg-primary-blue text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-      Crear
-    </button>
-  </div>
-</form>
-    </div>
+      <div className="flex justify-end">
+        <button
+          className="bg-primary-blue text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+        >
+          Crear
+        </button>
+      </div>
+    </form>
+    // </div>
   );
 }
 export { CreateStudent };

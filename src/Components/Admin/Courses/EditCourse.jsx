@@ -17,7 +17,7 @@ import { useForm } from "../../../Hooks/useForm";
 
 //In this component I'm just editing three fields: Description, programId and code
 
-function EditCourse() {
+function EditCourse({ id, setIsSent }) {
   //const dispatch = useDispatch();
   const navigate = useNavigate();
   //Brings the programs, to edit the program which belongs the course
@@ -27,19 +27,19 @@ function EditCourse() {
 
   //States to check the form
   const [notFilled, setNotFilled] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  // const [isSent, setIsSent] = useState(false);
 
   //using localStorage, function editItem
   const { editItem } = useLocalStorage("courses");
 
   //Selecting the course id
-  const { id } = useParams();
+  // const { id } = useParams();
 
   //Parsing id to number (with databases, you might delete this line)
   //Cuz the endpoint must be a string and the id's are mostly strings
-  const parsedId = parseInt(id);
+  // const parsedId = parseInt(id);
 
-  const courseToEdit = courses.find((course) => course.id === parsedId);
+  const courseToEdit = courses.find((course) => course.id === id);
 
   //Using the useForm hook
   const { formState, onInputChange } = useForm(courseToEdit);
@@ -116,7 +116,7 @@ function EditCourse() {
     } else {
       setNotFilled(false);
       //Sending the new object to localStorage
-      editItem(parsedId, formState);
+      editItem(id, formState);
       setIsSent(true);
     }
   };
@@ -124,10 +124,10 @@ function EditCourse() {
   return (
     <>
       <div className="comps-btw-lists">
-        <button className="back-button" onClick={() => navigate(-1)}>
+        {/* <button className="back-button" onClick={() => navigate(-1)}>
           &lt;
         </button>
-        {isSent && <Succesfull text={"Edited"} />}
+        {isSent && <Succesfull text={"Edited"} />} */}
 
         <h1>{formState.description}</h1>
         <form onSubmit={handleSubmit} className="create-form">

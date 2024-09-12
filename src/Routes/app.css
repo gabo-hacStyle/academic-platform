@@ -1,7 +1,14 @@
-.page{
-    margin: 60px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.page {
+  margin: 60px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.wrapper {
+  flex: 1 1 auto;
+  position: relative;
+  height: 95vh;
+  padding: 2rem;
+  overflow: auto;
 }

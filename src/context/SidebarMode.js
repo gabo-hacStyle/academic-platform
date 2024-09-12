@@ -6,9 +6,7 @@ const StateContext = createContext({
   setActiveMenu: (activeMenu) => {},
 });
 
-export const ContextProvider = ({
-  children,
-}) => {
+export const ContextProvider = ({ children }) => {
   //The state for the menu section: SideBar
   //To be opened or closed.
   //It changes according to the width of the screen in NavBar.jsx

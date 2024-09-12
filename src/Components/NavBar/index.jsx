@@ -8,12 +8,9 @@ function NavBar() {
         <div className="logo">AnReHis</div>
         <div className="platform">PLATAFOMA DE REGISTROS ACADEMICOS 📓</div>
       </nav>
-      <div className="lg:flex justify-center items-center h-screen my-[60px] p-2 mx-auto w-[95%]">
-
+      <div className="lg:flex justify-center h-[95vh] py-[45px] ">
         <Outlet />
       </div>
-      
-      
     </>
   );
 }

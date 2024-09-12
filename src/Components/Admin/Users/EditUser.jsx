@@ -16,19 +16,19 @@ import { useForm } from "../../../Hooks/useForm";
 //And fix it according to the field you need
 
 //In this component I'm just editing three fields: FullName, Role and Email
-function EditUser() {
+function EditUser({ id, setIsSent }) {
   //Navigate
-  const navigate = useNavigate();
+  // const navigate = useNavigate()0;
   //using localStorage, function editItem
   const { editItem } = useLocalStorage("users");
   //Selecting the user id from the URL
-  const { id } = useParams();
+  // const { id } = useParams();
   //Parsing id to number (with databases, you might delete this line)
   //Cuz the endpoint must be a string and the id's are mostly strings
-  const parsedId = parseInt(id);
+  // const parsedId = parseInt(id);
 
   const users = useSelector((state) => state.data.users);
-  const userToEdit = users.find((user) => user.id === parsedId);
+  const userToEdit = users.find((user) => user.id === id);
 
   ////States to set the edited data in all fields
   //Using the useForm hook
@@ -36,7 +36,7 @@ function EditUser() {
   // const [roleId, setRoleId] = useState(0)
   //States to check the form
   const [notFilled, setNotFilled] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  // const [isSent, setIsSent] = useState(false);
 
   //if using axios
   //To get the user as an object (if using databases, to bring only the object to be edited)
@@ -107,7 +107,7 @@ function EditUser() {
     } else {
       setNotFilled(false);
       //Sending the new object to localStorage
-      editItem(parsedId, formState);
+      editItem(id, formState);
       setIsSent(true);
     }
   };
@@ -115,12 +115,6 @@ function EditUser() {
   return (
     <>
       <div className="comps-btw-lists">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          &lt;
-        </button>
-
-        {isSent && <Succesfull text={"Edited"} />}
-
         <h1>Editing user: {userToEdit.fullName} </h1>
         <form onSubmit={handleSubmit} className="create-form">
           <h2>Name:</h2>

@@ -9,6 +9,7 @@ import { setUsers } from "../../../Slices/dataSlice";
 import Empty from "../../Empty";
 
 import ListItem from "../../shared/ListItem";
+import ShowItemDetails from "../shared/ShowItemDetails";
 
 function AllStudents() {
   //If using axios
@@ -22,6 +23,11 @@ function AllStudents() {
 
   const searchValue = useSelector((state) => state.data.searchValue);
   const loading = useSelector((state) => state.ui.loading);
+
+  //Estados para abrir la vista de un solo item
+  const [view, setView] = useState(false);
+  //Estados para guardar el id del item a ver
+  const [itemsToShow, setItemsToShow] = useState([]);
 
   //State to check if there's no data
 
@@ -44,7 +50,8 @@ function AllStudents() {
     const searchText = searchValue.toLowerCase();
     return text.includes(searchText);
   });
-
+  console.log(view);
+  console.log(itemsToShow);
   return (
     <>
       {loading && <Loader />}
@@ -55,10 +62,56 @@ function AllStudents() {
       }
       {searchValue
         ? searchedStudents.map((item, index) => (
-            <ListItem key={index} item={item} route="/admin/students/edit/" />
+            <>
+              <ListItem
+                key={index}
+                item={item}
+                view={view}
+                formToRender={"editStudent"}
+                itemsToShow={itemsToShow}
+                setItemsToShow={setItemsToShow}
+                setView={setView}
+              />
+              {
+                //If view is true, it will render the view of the item
+                view && itemsToShow.includes(item.id) && (
+                  <ShowItemDetails
+                    id={item.id}
+                    location={item.location}
+                    gender={item.gender}
+                    email={item.email}
+                    documentNo={item.documentNo}
+                    birthDate={item.birthDate}
+                  />
+                )
+              }
+            </>
           ))
         : students.map((item, index) => (
-            <ListItem key={index} item={item} route="/admin/students/edit/" />
+            <>
+              <ListItem
+                key={index}
+                item={item}
+                view={view}
+                formToRender={"editStudent"}
+                itemsToShow={itemsToShow}
+                setItemsToShow={setItemsToShow}
+                setView={setView}
+              />
+              {
+                //If view is true, it will render the view of the item
+                view && itemsToShow.includes(item.id) && (
+                  <ShowItemDetails
+                    id={item.id}
+                    location={item.location}
+                    gender={item.gender}
+                    email={item.email}
+                    documentNo={item.documentNo}
+                    birthDate={item.birthDate}
+                  />
+                )
+              }
+            </>
           ))}
     </>
   );

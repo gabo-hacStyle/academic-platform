@@ -4,8 +4,8 @@ const config = {
   theme: {
     extend: {
       colors: {
-        'primary-blue': 'rgb(2, 26, 80)',
-        'primary-yellow': 'rgb(150, 150, 2)',
+        "primary-blue": "rgb(2, 26, 80)",
+        "primary-yellow": "rgb(150, 150, 2)",
       },
     },
   },

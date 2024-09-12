@@ -1,15 +1,21 @@
 import React from "react";
 import "./Modals.css";
-import { useNavigate } from "react-router-dom";
-const Succesfull = ({ text }) => {
-  const navigate = useNavigate();
+import { useDispatch } from "react-redux";
+import { setFormToRender } from "../Slices/uiSlice";
+const Succesfull = ({ text, setIsSent }) => {
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    setIsSent(false);
+    dispatch(setFormToRender(null));
+  };
 
   return (
     <div className="modal-container">
       <div>
         <div className="modal-content success">
           <h1>{text} succesfully!</h1>
-          <button onClick={() => navigate("/admin")}>Ok</button>
+          <button onClick={() => closeModal}>Ok</button>
         </div>
       </div>
     </div>

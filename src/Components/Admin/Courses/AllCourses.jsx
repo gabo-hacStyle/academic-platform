@@ -7,6 +7,9 @@ import "./AllCourses.css";
 import { setCourses } from "../../../Slices/dataSlice";
 import useLocalStorage from "../../../Hooks/useLocalStorage";
 import Empty from "../../Empty";
+import { setItemId, setFormToRender } from "../../../Slices/uiSlice";
+import ListItem from "../../shared/ListItem";
+import ShowItemDetails from "../shared/ShowItemDetails";
 
 function AllCourses() {
   //React, Navigate and Redux tools needed
@@ -37,6 +40,9 @@ function AllCourses() {
     return text.includes(searchText);
   });
 
+  const [view, setView] = useState(false);
+  //Estados para guardar el id del item a ver
+  const [itemsToShow, setItemsToShow] = useState([]);
   //If using axios
   /*
     useEffect(() => {
@@ -44,7 +50,7 @@ function AllCourses() {
         dispatch(getData('/courses'))
     }, []);
      */
-
+  console.log(courses);
   return (
     <>
       {loading && <Loader />}
@@ -61,47 +67,63 @@ function AllCourses() {
           <h3>Courses:</h3>
           {
             <ul className="item-courses-list">
-              {searchedCourses.map((course, index) => (
-                <li key={index}>
-                  {course.description} - {course.code} : 👨🏻‍🏫 {course.teacher}
-                  <span>
-                    <button
-                      className="clickable"
-                      onClick={() => {
-                        navigate("/admin/courses/edit/" + course.id, {
-                          state: {
-                            id: course.id,
-                          },
-                        });
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </span>
-                </li>
+              {searchedCourses.map((item, index) => (
+                <>
+                  <ListItem
+                    key={index}
+                    item={item}
+                    formToRender={"editCourse"}
+                    view={view}
+                    itemsToShow={itemsToShow}
+                    setItemsToShow={setItemsToShow}
+                    setView={setView}
+                  />
+
+                  {
+                    //If view is true, it will render the view of the item
+                    view && itemsToShow.includes(item.id) && (
+                      <ShowItemDetails
+                        id={item.id}
+                        location={item.location}
+                        gender={item.gender}
+                        email={item.email}
+                        documentNo={item.documentNo}
+                        birthDate={item.birthDate}
+                      />
+                    )
+                  }
+                </>
               ))}
             </ul>
           }
         </>
       ) : (
-        courses.map((course, index) => (
-          <li key={index}>
-            {course.description} - {course.code} :👨🏻‍🏫 {course.teacher}
-            <span>
-              <button
-                className="clickable"
-                onClick={() => {
-                  navigate("/admin/courses/edit/" + course.id, {
-                    state: {
-                      id: course.id,
-                    },
-                  });
-                }}
-              >
-                Edit
-              </button>
-            </span>
-          </li>
+        courses.map((item, index) => (
+          <>
+            <ListItem
+              key={index}
+              item={item}
+              formToRender={"editCourse"}
+              view={view}
+              itemsToShow={itemsToShow}
+              setItemsToShow={setItemsToShow}
+              setView={setView}
+            />
+
+            {
+              //If view is true, it will render the view of the item
+              view && itemsToShow.includes(item.id) && (
+                <ShowItemDetails
+                  id={item.id}
+                  location={item.location}
+                  gender={item.gender}
+                  email={item.email}
+                  documentNo={item.documentNo}
+                  birthDate={item.birthDate}
+                />
+              )
+            }
+          </>
         ))
       )}
     </>

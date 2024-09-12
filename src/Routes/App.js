@@ -5,7 +5,8 @@ import { Staff } from "../Components/Staff";
 import { NavBar } from "../Components/NavBar";
 import { HeaderAdmin } from "../Components/Admin/HeaderAdmin";
 import { CreateCourse } from "../Components/Admin/Courses/CreateCourse";
-import { CreateStudent } from "../Components/Admin/Students/CreateStudent";
+// import { CreateStudent } from "../Components/Admin/Students/CreateStudent";
+import CreateAndEdit from "../Components/Admin/shared/CreateAndEdit";
 import { CreateUser } from "../Components/Admin/Users/CreateUser";
 import { AdminPage } from "../Components/Admin/AdminPage";
 import { EditStudent } from "../Components/Admin/Students/EditStudents";
@@ -13,7 +14,8 @@ import { EditUser } from "../Components/Admin/Users/EditUser";
 import { EditCourse } from "../Components/Admin/Courses/EditCourse";
 import { AuthProvider } from "../Hooks/auth";
 import { ContextProvider } from "../context/SidebarMode";
-import './app.css';
+import "./app.css";
+import { ShowStudent } from "../Components/Staff/ShowStudent";
 
 function App() {
   return (
@@ -23,31 +25,18 @@ function App() {
           <ContextProvider>
             <Routes>
               <Route path="/" element={<NavBar />}>
-
-              {/* Página de login */}
+                {/* Página de login */}
                 <Route index element={<WelcomePage />} />
 
                 {/* Página para los funcionarios */}
                 <Route path="/staff" element={<Profile />}>
                   <Route index element={<Staff />} />
+                  <Route path="/staff/student/:id" element={<ShowStudent />} />
                 </Route>
 
                 {/* Página para los administradores */}
                 <Route path="/admin" element={<HeaderAdmin />}>
                   <Route index element={<AdminPage />} />
-                  <Route path="/admin/students/new" element={<CreateStudent />} />
-                  <Route path="/admin/users/new" element={<CreateUser />} />
-                  <Route path="/admin/courses/new" element={<CreateCourse />} />
-
-                  <Route
-                    path="/admin/students/edit/:id"
-                    element={<EditStudent />}
-                  />
-                  <Route path="/admin/users/edit/:id" element={<EditUser />} />
-                  <Route
-                    path="/admin/courses/edit/:id"
-                    element={<EditCourse />}
-                  />
                 </Route>
               </Route>
             </Routes>

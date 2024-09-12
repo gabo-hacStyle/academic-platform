@@ -17,25 +17,25 @@ import { useForm } from "../../../Hooks/useForm";
 //And fix it according to the field you need
 
 //In this component I'm just editing three fields: FullName, location and Email
-function EditStudent() {
+function EditStudent({ id, setIsSent }) {
   const navigate = useNavigate();
 
   const { editItem } = useLocalStorage("users");
 
   //Selecting the user id from the URL
-  const { id } = useParams();
+  // const { id } = useParams();
   //Parsing id to number (with databases, you might delete this line)
   //Cuz the endpoint must be a string and the id's are mostly strings
-  const parsedId = parseInt(id);
+  // const parsedId = parseInt(id);
 
   const users = useSelector((state) => state.data.users);
-  const userToEdit = users.find((user) => user.id === parsedId);
+  const userToEdit = users.find((user) => user.id === id);
 
   //Using the useForm hook
   const { formState, onInputChange } = useForm(userToEdit);
   //States to check the form
   const [notFilled, setNotFilled] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  // const [isSent, setIsSent] = useState(false);
 
   //if using axios
   /**
@@ -108,7 +108,7 @@ function EditStudent() {
     } else {
       setNotFilled(false);
       //Sending the new object to localStorage
-      editItem(parsedId, formState);
+      editItem(id, formState);
       setIsSent(true);
     }
   };
@@ -116,76 +116,98 @@ function EditStudent() {
   return (
     <>
       <div className="">
-        {isSent && <Succesfull text={"Edited"} />}
-
-    
+        {/* {isSent && <Succesfull text={"Edited"} />} */}
 
         <h1>Editiando: {formState.fullName} </h1>
-        <form onSubmit={handleSubmit} className="w-[90%] max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md relative">
-  <button className="text-xs underline text-primary-blue/60 absolute top-0 left-4" onClick={() => navigate(-1)}>
+        <form
+          onSubmit={handleSubmit}
+          className="w-[90%]  mx-auto mt-10 p-6 bg-white rounded-lg shadow-md relative"
+        >
+          {/* <button className="text-xs underline text-primary-blue/60 absolute top-0 left-4" onClick={() => navigate(-1)}>
     &lt; Admin
-  </button>
+  </button> */}
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
-      Name
-    </label>
-    <input
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${formState.fullName === "" ? "empty" : ""}`}
-      type="text"
-      name="fullName"
-      id="fullName"
-      value={formState.fullName}
-      onChange={onInputChange}
-    />
-    <span className="text-sm text-gray-600">New name: {formState.fullName}</span>
-  </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="fullName"
+            >
+              Name
+            </label>
+            <input
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${formState.fullName === "" ? "empty" : ""}`}
+              type="text"
+              name="fullName"
+              id="fullName"
+              value={formState.fullName}
+              onChange={onInputChange}
+            />
+            <span className="text-sm text-gray-600">
+              New name: {formState.fullName}
+            </span>
+          </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-      Email
-    </label>
-    <input
-      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${formState.email === "" ? "empty" : ""}`}
-      type="text"
-      name="email"
-      id="email"
-      value={formState.email}
-      onChange={onInputChange}
-    />
-    <span className="text-sm text-gray-600">New email: {formState.email}</span>
-  </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${formState.email === "" ? "empty" : ""}`}
+              type="text"
+              name="email"
+              id="email"
+              value={formState.email}
+              onChange={onInputChange}
+            />
+            <span className="text-sm text-gray-600">
+              New email: {formState.email}
+            </span>
+          </div>
 
-  <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
-      Location
-    </label>
-    <select
-      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      name="location"
-      id="location"
-      value={formState.location}
-      onChange={onInputChange}
-    >
-      <option value="">Select country</option>
-      {countries.map((country) => (
-        <option key={country.country_name} value={country.country_name}>
-          {country.country_name}
-        </option>
-      ))}
-    </select>
-    <p className="text-sm text-gray-600 mt-2">Location: {formState.location}</p>
-  </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="location"
+            >
+              Location
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="location"
+              id="location"
+              value={formState.location}
+              onChange={onInputChange}
+            >
+              <option value="">Select country</option>
+              {countries.map((country) => (
+                <option key={country.country_name} value={country.country_name}>
+                  {country.country_name}
+                </option>
+              ))}
+            </select>
+            <p className="text-sm text-gray-600 mt-2">
+              Location: {formState.location}
+            </p>
+          </div>
 
-  {notFilled && <p className="text-red-500 text-xs italic mb-4">Fill all the fields</p>}
+          {notFilled && (
+            <p className="text-red-500 text-xs italic mb-4">
+              Fill all the fields
+            </p>
+          )}
 
-  <div className="flex justify-end">
-    <button className="bg-primary-blue text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-      Save changes
-    </button>
-  </div>
-</form>
-       
+          <div className="flex justify-end">
+            <button
+              className="bg-primary-blue text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Save changes
+            </button>
+          </div>
+        </form>
       </div>
     </>
   );
